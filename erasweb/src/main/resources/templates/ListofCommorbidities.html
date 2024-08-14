@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<title>User List</title>
+</head>
+<body>
+	<div th:replace="fragments/header :: navbar"></div>
+	<form role="form" method="post"
+		th:action="@{/maintenance/user/fullname}">
+		<div class="container">
+
+<!-- 			<div class="input-group"> -->
+<!-- 				<input type="text" class="form-control" name="lastnamequery" -->
+<!-- 					aria-label="Text input with segmented dropdown button"> -->
+<!-- 				<div class="input-group-append"> -->
+<!-- 					<button type="submit" class="btn btn-outline-secondary"  -->
+<!-- 					th:formaction="@{/maintenance/user/usersearchbyid}" -->
+<!-- 					>Search	by User ID</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="input-group"> -->
+<!-- 				<input type="text" class="form-control" name="firstnamequery" -->
+<!-- 					aria-label="Text input with segmented dropdown button"> -->
+<!-- 				<div class="input-group-append"> -->
+<!-- 					<button type="submit" class="btn btn-outline-secondary" -->
+<!-- 						th:formaction="@{/maintenance/user/fullname}">Search by -->
+<!-- 						Full Name</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Edit</th>
+						<th scope="col">User Type</th>
+						<th scope="col">User Code</th>
+						<th scope="col">Created by</th>
+						<th scope="col">Created Date</th>
+						<th scope="col">Modified by</th>
+						<th scope="col">Modified Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usertype:${usertype} ">
+						<th scope="row"><a type="button" class="btn btn-info"
+							th:href="@{/maintenance/userType/{userTypeID}/view(userTypeID=${usertype.userTypeID})}">Edit</a>
+						<td th:text=${usertype.userTypeID}></td>
+						<td th:text=${usertype.userTypeDesc}></td>
+						<td th:text=${usertype.createdBy}></td>
+						<td th:text=${usertype.dateCreated}></td>
+						<td th:text=${usertype.modifiedBy}></td>
+						<td th:text=${usertype.dateUpdated}></td>
+						
+					</tr>
+
+				</tbody>
+			</table>
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i: ${#numbers.sequence(0,totalPages-1)}"><a
+					th:href="@{/maintenance/usertypesall/pages(page=${i+1})}" th:text="${i+1}"
+					class="nav-link"></a> 
+				</li>
+			</ul>
+		</div>
+
+
+	</form>
+</body>
+</html>

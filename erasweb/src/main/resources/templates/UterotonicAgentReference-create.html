@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<title>Uterotonic Agent Reference Settings</title>
+</head>
+<body>
+
+	<div th:replace="fragments/Patientheader :: navbar"></div>
+	<center>
+		<H1>Uterotonic Agent Reference Settings</H1>
+	</center>
+	<main class="flex-shrink-0">
+		<div class="container">
+			<form role="form" method="post"
+				th:action="@{/patientrecords/uterotonicAgentReference/save}" th:object="${uterotonicAgentReference}">
+				<input type="hidden" id="uterotonicAgentRefId" name="uterotonicAgentRefId" th:field=*{uterotonicAgentRefId} />
+				<div class="form-group">
+					<label for="uterotonicAgentDesc">Description</label>
+					<input type="text" class="form-control" id="uterotonicAgentDesc"
+						placeholder="Uterotonic Reference Description" th:field="*{uterotonicAgentDesc}">
+					<p th:if="${#fields.hasErrors('uterotonicAgentDesc')}" class="text-danger"
+						th:errors="*{uterotonicAgentDesc}"></p>
+					<div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+				</div>
+
+				<div>
+					<button type="submit" name="action" value="cancel"
+						th:formaction="@{/Main}">Cancel</button>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</form>
+		</div>
+	</main>
+</body>
+</html>

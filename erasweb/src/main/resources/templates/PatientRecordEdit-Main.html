@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Patient Record Form</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/<your-locale>.js"></script>
+
+<!-- <script type="text/javascript" src="Scripts/jquery-2.1.1.min.js"></script> -->
+<!-- <script type="text/javascript" src="Scripts/bootstrap.min.js"></script> -->
+
+</head>
+<body>
+	<div class="container">
+		<header class="bg-white text-center py-4 sticky-top">
+			<div th:replace="fragments/Patientheader :: navbar"></div>
+			<h1>Patient Record Form</h1>
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item"><a class="nav-link active" id="tab1-tab"
+					data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+					aria-selected="true">Patient Registration</a></li>
+				<li class="nav-item"><a class="nav-link" id="tab2-tab"
+					data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+					aria-selected="false">Pre-Operation</a></li>
+				<li class="nav-item"><a class="nav-link" id="tab3-tab"
+					data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
+					aria-selected="false">Intra-Operation</a></li>
+				<li class="nav-item"><a class="nav-link" id="tab4-tab"
+					data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4"
+					aria-selected="false">Post Operation</a></li>
+				<li class="nav-item"><a class="nav-link" id="tab5-tab"
+					data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5"
+					aria-selected="false">Discharge</a></li>
+				<li class="nav-item"><a class="nav-link" id="tab6-tab"
+					data-toggle="tab" href="#tab6" role="tab" aria-controls="tab6"
+					aria-selected="false">Follow Up</a></li>
+				<li class="nav-item"><a class="nav-link" id="tab7-tab"
+					data-toggle="tab" href="#tab7" role="tab" aria-controls="tab7"
+					aria-selected="false">Other</a></li>
+			</ul>
+		</header>
+		<form id="patientRecordForm"
+			th:action="@{/patientrecords/patient/edit-save}"
+			th:object="${patientRecord}" method="post">
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active p-4" id="tab1" role="tabpanel"
+					aria-labelledby="tab1-tab">
+					<!-- Hidden Fields for processing -->
+					<input type="hidden" id="patientID" name="patientID"
+						class="form-control" th:field="*{patientID}" />
+					<!-- Other form fields -->
+					<div class="form-group">
+						<label for="medicalRecordNo">Medical Record No</label> <input
+							type="text" required id="medicalRecordNo" class="form-control"
+							th:field="*{medicalRecordNo}" placeholder="Medical Record No" />
+					</div>
+					<div class="form-group">
+						<label for="sequenceNo">Episode No</label> <input type="text"
+							id="sequenceNo" class="form-control" th:field="*{sequenceNo}"
+							placeholder="Episode No" readonly />
+						<div class="input-group-append">
+							<button type="button" class="btn btn-primary">New Episode</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="dateofBirth">Date of Birth</label> <input type="date"
+							id="dateofBirth" required class="form-control"
+							th:field="*{dateofBirth}" onblur="calculateAge(this.value)" />
+					</div>
+
+					<div class="form-group">
+						<label for="gender">Gender</label> <select id="gender"
+							class="form-control" th:field="*{gender}">
+							<option th:each="status : ${genderOptions}" th:value="${status}"
+								th:text="${status}">Gender</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="eRASStatus">ERAS Status</label> <select
+							id="eRASStatus" class="form-control" th:field="*{eRASStatus}">
+							<option th:each="status : ${eRASStatusOptions}"
+								th:value="${status}" th:text="${status}">Status</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="admissionTime">Admission Time</label> <input
+							type="time" id="admissionTime" class="form-control"
+							th:field="*{admissionTime}" placeholder="Admission Time" />
+					</div>
+
+					<div class="form-group">
+						<label for="admissionDate">Admission Date</label> <input
+							type="date" id="admissionDate" class="form-control"
+							th:field="*{admissionDate}" />
+					</div>
+
+					<div class="form-group">
+						<label for="age">Age</label> <input type="text" id="age"
+							class="form-control" th:field="*{age}" placeholder="Age" />
+					</div>
+
+					<div class="form-group">
+						<label for="height">Height</label> <input type="text" id="height"
+							class="form-control" th:field="*{height}" placeholder="height"
+							step="0.1" required onblur="calculateBMI()" />
+					</div>
+
+					<div class="form-group">
+						<label for="height">Weight</label> <input type="text" id="weight"
+							class="form-control" th:field="*{weight}" placeholder="weight"
+							step="0.1" required onblur="calculateBMI()" />
+					</div>
+
+					<div class="form-group">
+						<label for="calculatedBMI">Calculated BMI</label> <input
+							type="text" id="calculatedBMI" class="form-control"
+							th:field="*{calculatedBMI}" placeholder="CalculatedBMI" />
+					</div>
+
+					<div class="form-group">
+						<label for="surgicalSpecialty">Surgical Specialty</label> <input
+							type="text" id="surgicalSpecialty" class="form-control"
+							th:field="*{surgicalSpecialty}" placeholder="CalculatedBMI" />
+					</div>
+
+					<div class="form-group">
+						<label for="surgicalType">Surgical Type</label> <input type="text"
+							id="surgicalType" class="form-control" th:field="*{surgicalType}"
+							placeholder="surgicalType" />
+					</div>
+
+					<div class="form-group">
+						<label for="eRASStatusYN">ERAS Status Y/N</label> <select
+							id="eRASStatusYN" class="form-control" th:field="*{eRASStatusYN}">
+							<option th:each="status : ${eRASStatusYNOptions}"
+								th:value="${status}" th:text="${status}">eRASStatusYNOptions</option>
+						</select>
+					</div>
+
+
+					<div class="form-group">
+						<label for="aSAScore">ASA Score</label> <select id="aSAScore"
+							class="form-control" th:field="*{aSAScore}">
+							<option th:each="score : ${aSASCOREOptions}" th:value="${score}"
+								th:text="${score.getScore()}">ASA Score</option>
+						</select>
+					</div>
+
+					<h3>Comorbidities</h3>
+					<table class="table" id="comorbiditiesTable">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Comorbidity</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								th:each="comorbidity, iterStat : ${patientRecord.comorbidities}">
+								<td th:text="${iterStat.index + 1}">1</td>
+								<td><select class="form-control comorbidity-select"
+									th:field="*{comorbidities[__${iterStat.index}__].comRefID}"
+									th:id="${'comorbidity-select-' + iterStat.index}">
+										<!--										<option value="" th:text="'Select Comorbidity'"></option>-->
+										<option th:each="ref : ${comorbiditiesReferences}"
+											th:value="${ref.commorbidityId}" th:text="${ref.description}"
+											th:selected="${ref.commorbidityId} == ${comorbidity.comRefID}">
+										</option>
+								</select></td>
+								<td>
+									<button type="button" class="btn btn-danger"
+										onclick="removeRow(this)">Remove</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<button type="button" class="btn btn-primary" onclick="addRow()">Add
+						Comorbidity</button>
+
+				</div>
+				<div class="tab-pane fade p-4" id="tab2" role="tabpanel"
+					aria-labelledby="tab2-tab">
+					<div class="tab-content" id="myTabContent">
+
+						<div class="form-group">
+							<label for="preopEducation">PreopEducation</label> <select
+								id="preopEducation" class="form-control"
+								th:field="*{preopEducation}">
+								<option th:each="status : ${preopEducationOptions}"
+									th:value="${status}" th:text="${status}">Gender</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="preopLastFluidsDate">Preop Last Fluids Date </label>
+							<input type="date" id="preopLastFluidsDate" class="form-control"
+								th:field="*{preopLastFluidsDate}"
+								placeholder="Preop LastFluids Date" />
+						</div>
+
+						<div class="form-group">
+							<label for="preopLasFluidsTime">Preop LasFluids Time</label> <input
+								type="time" id="preopLasFluidsTime" class="form-control"
+								th:field="*{preopLasFluidsTime}"
+								placeholder="Preop Last Fluids Time" />
+						</div>
+
+						<div class="form-group">
+							<label for="preopLastSolidsDate">Preop Last Solids Date</label> <input
+								type="date" id="preopLastSolidsDate" class="form-control"
+								th:field="*{preopLastSolidsDate}"
+								placeholder="Preop Last Solids Date" />
+						</div>
+
+						<div class="form-group">
+							<label for="preopLastSolidsTime">Preop LastSolids Time</label> <input
+								type="time" id="preopLastSolidsTime" class="form-control"
+								th:field="*{preopLastSolidsTime}"
+								placeholder="preopLastSolidsTime" />
+						</div>
+
+						<div class="form-group">
+							<label for="preopFastingStatusSolids">Preop Fasting
+								Status Solids</label> <input type="text" id="preopFastingStatusSolids"
+								class="form-control" th:field="*{preopFastingStatusSolids}"
+								placeholder="Preop Fasting Status Solids" />
+						</div>
+
+
+
+
+
+					</div>
+					<!-- Empty tab content for future use -->
+				</div>
+				<div class="tab-pane fade p-4" id="tab3" role="tabpanel"
+					aria-labelledby="tab3-tab">
+					<div class="tab-content" id="myTabContent">
+
+						<div class="form-group">
+							<label for="antibioticProphylaxis">Antibiotic Prophylaxis</label>
+							<select id="antibioticProphylaxis" class="form-control"
+								th:field="*{antibioticProphylaxis}">
+								<option th:each="status : ${antibioticProphylaxisOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="pONVProphylaxis">PONV Prophylaxis</label> <select
+								id="pONVProphylaxis" class="form-control"
+								th:field="*{pONVProphylaxis}">
+								<option th:each="status : ${pONVProphylaxisOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="pONVProphylaxisAgents">PONV Prophylaxis
+								Agents</label> <select id="pONVProphylaxisAgents" class="form-control"
+								th:field="*{pONVProphylaxisAgents}">
+								<option th:each="agent : ${pONVProphylaxisAgentsOptions}"
+									th:value="${agent}" th:text="${agent.getScore()}">PONV
+									Prophylaxis Agents</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="anaesthesiaType">Anaesthesia Type</label> <select
+								id="anaesthesiaType" class="form-control"
+								th:field="*{anaesthesiaType}">
+								<option th:each="status : ${anaesthesiaTypeOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="iTMUsed">ITMUsed</label> <select id="iTMUsed"
+								class="form-control" th:field="*{iTMUsed}">
+								<option th:each="status : ${iTMUsedOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="systemicOpioidsUsed">Systemic Opioids Used</label> <select
+								id="systemicOpioidsUsed" class="form-control"
+								th:field="*{systemicOpioidsUsed}">
+								<option th:each="status : ${systemicOpioidsUseddOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+						</div>
+						<div class="container mt-5">
+							<h3>Systemic Opioids</h3>
+							<table class="table table-bordered" id="systemicOpioidsTable">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Dosage</th>
+										<th>Systemic Opioid</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										th:each="opioid, iterStat : ${patientRecord.systemicOpioids}">
+										<td th:text="${iterStat.index + 1}">1</td>
+										<td><input type="number"
+											th:field="*{systemicOpioids[__${iterStat.index}__].dosage}"
+											class="form-control dosage-input" /></td>
+										<td><select class="form-control opioid-select"
+											th:field="*{systemicOpioids[__${iterStat.index}__].comRefID}"
+											th:id="${'opioid-select-' + iterStat.index}">
+												<option value="" th:text="'Select Systemic Opioid'"></option>
+												<option th:each="ref : ${systemicOpioidsReference}"
+													th:value="${ref.systemicOpioidsRefId}"
+													th:text="${ref.systemicOpioidsDesc}"
+													th:selected="${ref.systemicOpioidsRefId} == ${opioid.comRefID}">
+
+
+												</option>
+										</select></td>
+										<td>
+											<button type="button" class="btn btn-danger"
+												onclick="removeRowSysOp(this)">Remove</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<button type="button" class="btn btn-primary"
+								onclick="addRowSysOp()">Add Systemic Opioid</button>
+
+
+						</div>
+						<div class="form-group">
+							<label for="skinToSkin">Skin to Skin</label> <select
+								id="skinToSkin" class="form-control" th:field="*{skinToSkin}">
+								<option th:each="status : ${skinToSkinOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+						</div>
+
+						<div class="container mt-5">
+
+							<table class="table" id="uterotonicAgentsTable">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Uterotonic Agent</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										th:each="agent, iterStat : ${patientRecord.uterotonicAgent}">
+										<td th:text="${iterStat.index + 1}">1</td>
+										<td><select class="form-control Uagent-select"
+											th:field="*{uterotonicAgent[__${iterStat.index}__].comRefID}"
+											th:id="${'Uagent-select-' + iterStat.index}">
+												<option value="" th:text="'Select Uterotonic Agent'"></option>
+												<option th:each="ref : ${uterotonicAgentReference}"
+													th:value="${ref.uterotonicAgentRefId}"
+													th:text="${ref.uterotonicAgentDesc}"
+													th:selected="${ref.uterotonicAgentRefId} == ${agent.comRefID}">
+												</option>
+										</select>
+										<td>
+											<button type="button" class="btn btn-danger"
+												onclick="removeRowAgent(this)">Remove</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<button type="button" class="btn btn-primary"
+								onclick="addRowAgent()">Add Uterotonic Agent</button>
+
+						</div>
+
+						<!-- Empty tab content for future use -->
+					</div>
+
+					<div class="form-group">
+						<label for="firstDoseOralOpioidsDate">first Dose Oral
+							Opioids Date</label> <input type="date" id="firstDoseOralOpioidsDate"
+							class="form-control" th:field="*{firstDoseOralOpioidsDate}"
+							placeholder="First Dose Oral Opioids Date" />
+					</div>
+
+					<div class="form-group">
+						<label for="firstDoseOralOpioidsTime">first Dose Oral
+							Opioids Time</label> <input type="time" id="firstDoseOralOpioidsTime"
+							class="form-control" th:field="*{firstDoseOralOpioidsTime}"
+							placeholder="first Dose Oral Opioids Time" />
+					</div>
+					<div class="form-group">
+						<label for="totalIVFluidsGivenml">Total IV Fluids Given in
+							ml</label> <input type="text" id="totalIVFluidsGivenml"
+							class="form-control" th:field="*{totalIVFluidsGivenml}"
+							placeholder="Total IV Fluids Given in ml" />
+					</div>
+
+
+
+					<!-- Empty tab content for future use -->
+				</div>
+				<div class="tab-pane fade p-4" id="tab4" role="tabpanel"
+					aria-labelledby="tab4-tab">
+					<div class="form-group">
+						<label for="postOpOralFluidIntakeDate">PostOpOral Fluid
+							Intake Date</label> <input type="date" id="postOpOralFluidIntakeDate"
+							class="form-control" th:field="*{postOpOralFluidIntakeDate}"
+							placeholder="Post OpOralFluid Intake Date" />
+					</div>
+					<div class="form-group">
+						<label for="postOpOralFluidIntakeTime">Post OpOral Fluid
+							Intake Time</label> <input type="time" id="postOpOralFluidIntakeTime"
+							class="form-control" th:field="*{postOpOralFluidIntakeTime}"
+							placeholder="PostOp Oral Fluid Intake Time" />
+					</div>
+					<div class="form-group">
+						<label for="timetoOralFluidIntake">Time to Oral Fluid
+							Intake</label> <input type="text" id="timetoOralFluidIntake"
+							class="form-control" th:field="*{timetoOralFluidIntake}"
+							placeholder="Time to Oral Fluid Intake" />
+					</div>
+					<div class="form-group">
+						<label for="postOpOralSolidsIntakeDate">Post OpOral Solids
+							IntakeDate</label> <input type="date" id="postOpOralSolidsIntakeDate"
+							class="form-control" th:field="*{postOpOralSolidsIntakeDate}"
+							placeholder="Post OpOral Solids IntakeDate" />
+					</div>
+					<div class="form-group">
+						<label for="PostOpOralSolidsIntakeTime">Post OpOral Solids
+							Intake Time</label> <input type="time" id="PostOpOralSolidsIntakeTime"
+							class="form-control" th:field="*{PostOpOralSolidsIntakeTime}"
+							placeholder="Post OpOral Solids Intake Time" />
+					</div>
+					<div class="form-group">
+						<label for="mobilisationStartDate">Mobilisation Start Date</label>
+						<input type="date" id="mobilisationStartDate" class="form-control"
+							th:field="*{mobilisationStartDate}"
+							placeholder="Mobilisation Start Date" />
+					</div>
+					<div class="form-group">
+						<label for="mobilisationStartTime">Mobilisation Start Time</label>
+						<input type="time" id="mobilisationStartTime" class="form-control"
+							th:field="*{mobilisationStartTime}"
+							placeholder="Mobilisation Start Time" />
+					</div>
+					<div class="form-group">
+						<label for="timetoMobilisationFromSurgery">Time to
+							Mobilisation From Surgery</label> <input type="text"
+							id="timetoMobilisationFromSurgery" class="form-control"
+							th:field="*{timetoMobilisationFromSurgery}"
+							placeholder="Time to Mobilisation FromSurgery" />
+					</div>
+					<div class="form-group">
+						<label for="removalUrinaryCatheterDate">Removal Urinary
+							CatheterDate</label> <input type="date" id="removalUrinaryCatheterDate"
+							class="form-control" th:field="*{removalUrinaryCatheterDate}"
+							placeholder="Removal Urinary CatheterDate" />
+					</div>
+					<div class="form-group">
+						<label for="removalUrinaryCatheterTime">Removal Urinary
+							CatheterTime</label> <input type="time" id="removalUrinaryCatheterTime"
+							class="form-control" th:field="*{removalUrinaryCatheterTime}"
+							placeholder="Removal Urinary CatheterTime" />
+					</div>
+					<div class="form-group">
+						<label for="trialofVoid">Trial of Void</label> <select
+							id="trialofVoid" class="form-control" th:field="*{trialofVoid}">
+							<option th:each="status : ${trialofVoidOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="recatheterised">Recatheterised</label> <select
+							id="recatheterised" class="form-control"
+							th:field="*{recatheterised}">
+							<option th:each="status : ${recatheterisedOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="regularParacetamol">Regular Paracetamol</label> <select
+							id="regularParacetamol" class="form-control"
+							th:field="*{regularParacetamol}">
+							<option th:each="status : ${regularParacetamolOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<!-- 						<div class="form-group"> -->
+					<!-- 							<label for="regularNSAIDS">Regular NSAIDS</label> <select -->
+					<!-- 								id="regularNSAIDS" class="form-control" -->
+					<!-- 								th:field="*{regularNSAIDS}"> -->
+					<!-- 								<option th:each="status : ${regularNSAIDSOptions}" -->
+					<!-- 									th:value="${status}" th:text="${status}">Option</option> -->
+					<!-- 							</select> -->
+					<!-- 						</div> -->
+
+					<div class="form-group">
+						<label for="regularNSAIDS">Regular NSAIDS</label> <select
+							id="regularNSAIDS" class="form-control"
+							th:field="*{regularNSAIDS}">
+							<option th:each="status : ${regularNSAIDSOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="oralOpioids">Oral Opioids</label> <select
+							id="oralOpioids" class="form-control" th:field="*{oralOpioids}">
+							<option th:each="status : ${oralOpioidsOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<!-- table here  -->
+					<div class="container mt-5">
+						<h3>Oral Opioids Agents</h3>
+
+						<table class="table table-bordered" id="oralOpioidsAgentsTable">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Dosage</th>
+									<th>Oral Opioid Agent</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:each="agent, iterStat : ${patientRecord.oralOpioidsAgents}">
+									<td th:text="${iterStat.index + 1}">1</td>
+									<td><input type="number"
+										th:field="*{oralOpioidsAgents[__${iterStat.index}__].dosage}"
+										class="form-control dosage-input" /></td>
+									<td><select class="form-control agent-select"
+										th:field="*{oralOpioidsAgents[__${iterStat.index}__].comRefID}"
+										th:id="${'agent-select-' + iterStat.index}">
+											<option value="" th:text="'Select Oral Opioid Agent'"></option>
+											<option th:each="ref : ${oralOpioidsAgentsReference}"
+												th:value="${ref.oralOpioidsAgentsRefId}"
+												th:text="${ref.oralOpioidsAgentsRefDesc}"
+												th:selected="${ref.oralOpioidsAgentsRefId} == ${agent.comRefID}">
+											</option>
+									</select></td>
+									<td>
+										<button type="button" class="btn btn-danger"
+											onclick="removeRowAgentO(this)">Remove</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-primary"
+							onclick="addRowAgentO()">Add Oral Opioid Agent</button>
+					</div>
+
+
+					<!-- table here  -->
+				</div>
+				<div class="tab-pane fade p-4" id="tab5" role="tabpanel"
+					aria-labelledby="tab5-tab">
+					<div class="form-group">
+						<label for="dischargeDate">Discharge Date</label> <input
+							type="date" id="dischargeDate" class="form-control"
+							th:field="*{dischargeDate}"
+							placeholder="Total IV Fluids Given in ml" />
+					</div>
+					<div class="form-group">
+						<label for="dischargeTime">Discharge Time</label> <input
+							type="time" id="dischargeTime" class="form-control"
+							th:field="*{dischargeTime}" placeholder="Discharge Time" />
+					</div>
+					<div class="form-group">
+						<label for="durationOfStayHrs">Duration Of Stay in Hrs</label> <input
+							type="text" id="durationOfStayHrs" class="form-control"
+							th:field="*{durationOfStayHrs}" placeholder="Duration Of StayHrs" />
+					</div>
+					<div class="form-group">
+						<label for="inHospitalComplications">In Hospital
+							Complications</label> <select id="oralOpioids" class="form-control"
+							th:field="*{inHospitalComplications}">
+							<option th:each="status : ${inHospitalComplicationsOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inHospitalComplicationsnotes">In Hospital
+							Complications Notes</label> <input type="text"
+							id="inHospitalComplicationsnotes" class="form-control"
+							th:field="*{inHospitalComplicationsnotes}"
+							placeholder="InHospital Complications notes" />
+					</div>
+					<!-- Empty tab content for future use -->
+				</div>
+				<div class="tab-pane fade p-4" id="tab6" role="tabpanel"
+					aria-labelledby="tab6-tab">
+					<div class="form-group">
+						<label for="Day300Followup">Day 300 Follow up</label> <select
+							id="Day300Followup" class="form-control"
+							th:field="*{day300Followup}">
+							<option th:each="status : ${day300FollowupOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<!-- 					<div class="form-group"> -->
+					<!-- 						<label for="PostDischargeComplications">PostDischargeComplications</label> -->
+					<!-- 						<select id="postDischargeComplications" class="form-control" -->
+					<!-- 							th:field="*{postDischargeComplications}"> -->
+					<!-- 							<option th:each="status : ${postDischargeComplicationsOptions}" -->
+					<!-- 								th:value="${status}" th:text="${status}">Option</option> -->
+					<!-- 						</select> -->
+					<!-- 					</div> -->
+					<div class="form-group">
+						<label for="postDischargeComplications">Post Discharge
+							Complications</label> <select id="postDischargeComplications"
+							class="form-control" th:field="*{postDischargeComplications}">
+							<option th:each="status : ${postDischargeComplicationsOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="postDischargeComplicationsnotes">Post
+							Discharge Complications notes</label> <input type="text"
+							id="postDischargeComplicationsnotes" class="form-control"
+							th:field="*{postDischargeComplicationsnotes}"
+							placeholder="Post Discharge Complications Notes" />
+					</div>
+					<!--					<div class="form-group">-->
+					<!--						<label for="readmision">Re Admision</label> <select-->
+					<!--							id="readmision" class="form-control" th:field="*{readmision}">-->
+					<!--							<option th:each="status : ${preadmisionOptions}"-->
+					<!--								th:value="${status}" th:text="${status}">Option</option>-->
+					<!--						</select>-->
+					<!--					</div>-->
+
+					<div class="form-group">
+						<label for="readmision">Re Admission</label> <select
+							id="readmision" class="form-control" th:field="*{readmision}">
+							<option th:each="status : ${readmisionOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="ReadmisionNotes">Re Admision Notes</label> <input
+							type="text" id="ReadmisionNotes" class="form-control"
+							th:field="*{ReadmisionNotes}" placeholder="Re Admision Notes" />
+					</div>
+					<!-- Empty tab content for future use -->
+				</div>
+				<div class="tab-pane fade p-4" id="tab7" role="tabpanel"
+					aria-labelledby="tab7-tab">
+					<div class="form-group">
+						<label for="pROMneeded">PROMneeded</label> <select id="pROMneeded"
+							class="form-control" th:field="*{pROMneeded}">
+							<option th:each="status : ${pROMneededOptions}"
+								th:value="${status}" th:text="${status}">Option</option>
+						</select>
+						<div class="form-group">
+							<label for="pROMToolUsed">PROM Tool Used</label> <select
+								id="pROMToolUsed" class="form-control"
+								th:field="*{pROMToolUsed}">
+								<option th:each="status : ${pROMToolUsedOptions}"
+									th:value="${status}" th:text="${status}">Option</option>
+							</select>
+							<div class="form-group">
+								<label for="pROmResult">PROm Result</label> <input type="text"
+									id="pROmResult" class="form-control" th:field="*{pROmResults}"
+									placeholder="PROM Result" />
+							</div>
+							<div class="form-group">
+								<label for="IsInactive">Is Inactive</label> <input
+									type="checkbox" id="IsInactive" class="form-control"
+									th:field="*{IsInactive}" placeholder="Is Inactive" />
+							</div>
+						</div>
+
+						<!-- Empty tab content for future use -->
+					</div>
+
+
+				</div>
+				<!-- Submit and Cancel buttons -->
+				<div class="form-group mt-3">
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-secondary"
+						onclick="window.location.href='/patientRecord/list'">Cancel</button>
+				</div>
+		</form>
+	</div>
+
+	<script th:inline="javascript">
+	   var comorbiditiesData = [];
+
+	   function loadComorbiditiesOptions(selectElement, selectedValue) {
+		    
+	        //selectElement.empty(); // Clear any existing options
+	        selectElement.append('<option value="">Select Comorbidity</option>'); // Add default option
+	        comorbiditiesData.forEach(function(comorbidity) {
+	            var option = $('<option></option>')
+	                .attr('value', comorbidity.commorbidityId)
+	                .text(comorbidity.description);
+	            if (comorbidity.commorbidityId == selectedValue) {
+	                option.attr('selected', 'selected');
+	            }
+	            selectElement.append(option);
+	        });
+	    }
+	   
+	    function addRow() {
+	    	populateCommorbidities();
+	    	
+	    	var table = document.getElementById('comorbiditiesTable').getElementsByTagName('tbody')[0];
+	        var rowCount = table.rows.length;
+	        var row = table.insertRow(rowCount);
+	        var cell1 = row.insertCell(0);
+	        var cell2 = row.insertCell(1);
+	        var cell3 = row.insertCell(2);
+
+	        cell1.innerHTML = rowCount + 1;
+	        cell2.innerHTML = '' +
+	                          '<select class="form-control comorbidity-select" name="comorbidities[' + rowCount + '].comRefID"></select>';
+	        cell3.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>';
+
+	        loadComorbiditiesOptions($(cell2).find('.comorbidity-select'));
+	    }
+
+	    function removeRow(button) {
+	        var row = button.parentNode.parentNode;
+	        row.parentNode.removeChild(row);
+	    }
+	    
+	    function populateCommorbidities() {
+	        $.ajax({
+	            url: '/ajax/comorbiditiesref/all',
+	            type: 'GET',
+	            dataType: 'json',
+	            success: function(data) {
+	                comorbiditiesData = data;
+	                $('.comorbidity-select').each(function() {
+	                    loadComorbiditiesOptions($(this));
+	                });
+	            },
+	            error: function(error) {
+	                console.error("Error loading comorbidities:", error);
+	            }
+	        });
+	    };
+
+        // Function to calculate age from date of birth
+        function calculateAge(birthdate) {
+            var today = new Date();
+            var dob = new Date(birthdate);
+            var age = today.getFullYear() - dob.getFullYear();
+            var monthDiff = today.getMonth() - dob.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            return age;
+        }
+        // Function to calculate any fields based on ID
+        function calculateById() {
+   			var birthdate = document.getElementById('dateofBirth').value;
+   		    document.getElementById('dateofBirth').value = calculateAge(birthdate);
+		}
+        
+        
+
+        $(document).ready(function() {
+            $('#dateofBirth').on('change', function() {
+                var dob = $(this).val();
+                var age = calculateAge(dob);
+                $('#age').val(age);
+            });
+        });
+        
+        // BMI Computation
+        function calculateBMI() {
+			  // Get weight and height values
+			  var weight = parseFloat(document.getElementById("weight").value);
+			  var height = parseFloat(document.getElementById("height").value) / 100; // Convert cm to meters
+			
+			  // Check if both weight and height are entered
+			  if (isNaN(weight) || isNaN(height)) {
+			    return; // Prevent calculation and display if values are missing
+			  }
+			
+			  // Calculate BMI
+			  var bmi = weight / (height * height);
+			
+			  // Display calculated BMI
+			  document.getElementById("calculatedBMI").value = bmi.toFixed(2);
+        }    
+        
+        // -systemic opioids
+     var opioidsData = /*[[${systemicOpioidsReference}]]*/ [];
+
+    function loadSystemicOpioidsOptions(selectElement, selectedValue) {
+        opioidsData.forEach(function(opioid) {
+            var option = $('<option></option>')
+                .attr('value', opioid.systemicOpioidsRefId)
+                .text(opioid.systemicOpioidsDesc);
+            if (opioid.systemicOpioidsRefId == selectedValue) {
+                option.attr('selected', 'selected');
+            }
+            selectElement.append(option);
+        });
+    }
+    
+    function addRowSysOp() {
+        var table = document.getElementById('systemicOpioidsTable').getElementsByTagName('tbody')[0];
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+
+        cell1.innerHTML = rowCount + 1;
+        cell2.innerHTML = '<input type="number" name="systemicOpioids[' + rowCount + '].dosage" class="form-control dosage-input"/>';
+        cell3.innerHTML = '<select class="form-control opioid-select" name="systemicOpioids[' + rowCount + '].comRefID"></select>';
+        cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowSysOp(this)">Remove</button>';
+
+        loadSystemicOpioidsOptions($(cell3).find('.opioid-select'));
+
+        $(cell3).find('.opioid-select').change(function() {
+            var dosageInput = $(row).find('.dosage-input');
+            if (dosageInput.val().trim() === "") {
+                alert('Please enter a dosage before selecting an opioid.');
+            }
+        });
+    }
+
+    function removeRowSysOp(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+    
+    function populateSystemicOpioids() {
+        $('.opioid-select').each(function() {
+            var selectedValue = $(this).val();
+            loadSystemicOpioidsOptions($(this), selectedValue);
+        });
+    }
+
+    $(document).ready(function() {
+        populateSystemicOpioids();
+    });
+    // Agents
+   var agentsData = [];
+
+   function loadAgentsOptions(selectElement) {
+	// Alert to check if the selectElement is found
+	//    alert("selectElement found: " + (selectElement.length > 0));
+	//    console.log("selectElement:", selectElement);
+	   
+       //selectElement.empty(); // Clear any existing options
+       selectElement.append('<option value="">Select Uterotonic Agent</option>'); // Add default option
+       agentsData.forEach(function(agent) {
+           var option = $('<option></option>')
+               .attr('value', agent.uterotonicAgentRefId)
+               .text(agent.uterotonicAgentDesc);
+           
+           selectElement.append(option);
+       });
+   }
+   
+    function addRowAgent() {
+    	populateUterotonicAgents();
+    	
+        var table = document.getElementById('uterotonicAgentsTable').getElementsByTagName('tbody')[0];
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = rowCount + 1;
+        cell2.innerHTML = '' +
+                          '<select class="form-control Uagent-select" name="uterotonicAgent[' + rowCount + '].comRefID"></select>';
+        cell3.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowAgent(this)">Remove</button>';
+
+        loadAgentsOptions($(cell2).find('.Uagent-select'));
+    }
+
+    function removeRowAgent(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    function populateUterotonicAgents() {
+        $.ajax({
+            url: '/ajax/uterotonicAgentRef/all',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                agentsData = data;
+                $('.Uagent-select').each(function() {
+                    loadAgentsOptions($(this));
+                });
+            },
+            error: function(error) {
+                console.error("Error loading uterotonic agents:", error);
+            }
+        });
+    };
+<!--  Oral Opioids  -->
+var agentsDataO = /*[[${oralOpioidsAgentsReference}]]*/ [];
+
+function loadAgentsOptionsO(selectElement, selectedValue) {
+    //selectElement.empty(); // Clear any existing options
+    selectElement.append('<option value="">Select Systemic Opioid</option>'); // Add default option
+
+    agentsDataO.forEach(function(opioid) {
+        var option = $('<option></option>')
+            .attr('value', opioid.oralOpioidsAgentsRefId)
+            .text(opioid.oralOpioidsAgentsRefDesc);
+		
+        if (opioid.systemicOpioidsRefId == selectedValue) {
+            option.attr('selected', 'selected');
+        }
+
+        selectElement.append(option);
+    });
+}
+
+
+
+
+function addRowAgentO() {
+    var table = document.getElementById('oralOpioidsAgentsTable').getElementsByTagName('tbody')[0];
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    cell1.innerHTML = rowCount + 1;
+    cell2.innerHTML = '<input type="number" name="oralOpioidsAgents[' + rowCount + '].dosage" class="form-control dosage-input"/>';
+    cell3.innerHTML = '<input type="hidden" name="oralOpioidsAgents[' + rowCount + '].id" />' +
+                      '<select class="form-control agent-select" name="oralOpioidsAgents[' + rowCount + '].comRefID"></select>';
+    cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowAgentO(this)">Remove</button>';
+
+    loadAgentsOptionsO($(cell3).find('.agent-select'));
+
+    // Add event listener to the new select element
+    $(cell2).find('.agent-select').change(function() {
+        var dosageInput = $(this).closest('tr').find('.dosage-input');
+        if (dosageInput.val().trim() === "") {
+            alert('Please enter a dosage before selecting an opioid.');
+            $(this).val(''); // Reset the selection if dosage is empty
+        }
+    });
+}
+
+
+function removeRowAgentO(button) {
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}
+
+function populateOralOpioids() {
+    $('.opioid-select').each(function() {
+        var selectedValue = $(this).val();
+        loadAgentsOptionsO($(this), selectedValue);
+    });
+}
+
+
+$(document).ready(function() {
+	populateOralOpioids();
+});
+
+//date convert to locale 
+      document.addEventListener("DOMContentLoaded", function() {
+            var dateFields = document.querySelectorAll('input[type="date"]');
+            var placeholderFormat = 'YYYY-MM-DD';  // Desired date format for placeholder
+
+            dateFields.forEach(function(dateInput) {
+                // Set placeholder to indicate the date format
+                dateInput.placeholder = placeholderFormat;
+
+                // Add change event listener to format the date
+                dateInput.addEventListener('change', function() {
+                    var formattedDate = moment(dateInput.value).format('YYYY-MM-DD');
+                    dateInput.value = formattedDate;
+                });
+            });
+        });
+        
+ // vvalidate form before submission
+ function validateForm(event) {
+    let isValid = true;
+    let errorMessage = "";
+    
+
+
+    // Validate Comorbidities
+    $('#comorbiditiesTable tbody tr').each(function() {
+        const selectElement = $(this).find('.comorbidity-select');
+        if (selectElement.val() === "") {
+            isValid = false;
+            errorMessage += "Please select a comorbidity for each row in Comorbidities table.\n";
+        }
+    });
+
+    // Validate Systemic Opioids
+    $('#systemicOpioidsTable tbody tr').each(function() {
+        const dosageInput = $(this).find('.dosage-input');
+        const selectElement = $(this).find('.opioid-select');
+        if (dosageInput.val().trim() === "" || isNaN(dosageInput.val())) {
+            isValid = false;
+            errorMessage += "Please enter a numeric dosage for each row in Systemic Opioids table.\n";
+        }
+        if (selectElement.val() === "") {
+            isValid = false;
+            errorMessage += "Please select a systemic opioid for each row in Systemic Opioids table.\n";
+        }
+    });
+
+    // Validate Uterotonic Agents
+    $('#uterotonicAgentsTable tbody tr').each(function() {
+        const selectElement = $(this).find('.Uagent-select');
+        if (selectElement.val() === "") {
+            isValid = false;
+            errorMessage += "Please select a uterotonic agent for each row in Uterotonic Agents table.\n";
+        }
+    });
+
+    // Validate Oral Opioids Agents
+    $('#oralOpioidsAgentsTable tbody tr').each(function() {
+        const dosageInput = $(this).find('.dosage-input-oral');
+        const selectElement = $(this).find('.agent-select');
+        if (dosageInput.val().trim() === "" || isNaN(dosageInput.val())) {
+            isValid = false;
+            errorMessage += "Please enter a numeric dosage for each row in Oral Opioids Agents table.\n";
+        }
+        if (selectElement.val() === "") {
+            isValid = false;
+            errorMessage += "Please select an oral opioid agent for each row in Oral Opioids Agents table.\n";
+        }
+    });
+
+    if (!isValid) {
+        alert(errorMessage);
+        event.preventDefault(); // Prevent form submission
+    }
+}
+ $(document).ready(function() {
+	    $('#patientRecordForm').on('submit', validateForm);
+	});
+
+ // MRN Sequence Query
+ $(document).ready(function() {
+        $('#medicalRecordNo').on('blur', function() {
+            var mrnNo = $(this).val();
+            if (mrnNo) {
+                $.ajax({
+                    url: '/ajax/get-next-sequence',
+                    type: 'GET',
+                    data: { mrnNo: mrnNo },
+                    success: function(response) {
+                        $('#sequenceNo').val(response);
+                        var sequenceNumber = response;
+                        if(sequenceNumber>1){
+                        var userConfirmed = confirm("Existing MRN No, is found, Do you want to create a new record with a sequence No: " + response + "?");
+                        if (!userConfirmed) {
+                            $('#sequenceNo').val(''); // Clear the sequence number if user says No
+                        }
+                        }
+                    },
+                    error: function() {
+                        $('#sequenceNo').val('');
+                    }
+                });
+				// Fetch date of birth
+                    $.ajax({
+                        url: '/ajax/get-date-of-birth',
+                        type: 'GET',
+                        data: { medicalRecordNo: mrnNo },
+                        success: function(response) {
+                            $('#dateofBirth').val(response);
+                        },
+                        error: function() {
+                            $('#dateofBirth').val('');
+                        }
+                    });
+            } else {
+                $('#sequenceNo').val('');
+				$('#dateofBirth').val('');
+            }
+        });
+    });
+    </script>
+</body>
+</html>

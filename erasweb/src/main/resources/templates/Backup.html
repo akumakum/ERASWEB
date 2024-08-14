@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database Backup</title>
+</head>
+<body>
+    <h1>Backup Database</h1>
+    <form action="/backup/create" method="post">
+        <label for="filename">Filename:</label>
+        <input type="text" id="filename" name="filename" required><br><br>
+        
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required><br><br>
+        
+        <input type="submit" value="Backup">
+    </form>
+</body>
+</html>

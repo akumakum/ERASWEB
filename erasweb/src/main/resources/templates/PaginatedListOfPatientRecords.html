@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <meta charset="ISO-8859-1">
+    <title>Patient Records</title>
+    <style>
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .table-sticky-header thead th {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/patientheader :: navbar"></div>
+    <center>
+        <h1>Patient Records</h1>
+    </center>
+    <main class="flex-shrink-0">
+        <div class="container">
+            <form action="/patientrecords/patientrecords" method="get" class="form-inline mb-3">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="medicalRecordNo" class="sr-only">Search by MRN:</label>
+                    <input type="text" id="medicalRecordNo" name="medicalRecordNo" class="form-control" 
+                           value="${medicalRecordNo}" placeholder="Type Medical Record Number" />
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
+            <div class="table-container">
+                <table class="table table-striped table-sticky-header">
+                    <thead>
+                        <tr>
+                            <th>Medical Record No</th>
+                            <th>Sequence No</th>
+                            <th>Date Created</th>
+                            <th>Created By</th>
+                            <th>Date Modified</th>
+                            <th>Modified By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="record : ${records}">
+                            <td th:text="${record.medicalRecordNo}"></td>
+                            <td th:text="${record.sequenceNo}"></td>
+                            <td th:text="${record.dateCreated}"></td>
+                            <td th:text="${record.createdBy}"></td>
+                            <td th:text="${record.dateUpdated}"></td>
+                            <td th:text="${record.modifiedBy}"></td>
+                            <td>
+                                <a th:href="@{/patientrecords/patient/{mrn}(mrn=${record.medicalRecordNo})}" class="btn btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${currentPage > 1}">
+                            <a class="page-link" th:href="@{/patientrecords/patientrecords(PageNo=${currentPage - 1}, PageSize=${pageSize}, medicalRecordNo=${medicalRecordNo})}">Previous</a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage < totalPages}">
+                            <a class="page-link" th:href="@{/patientrecords/patientrecords(PageNo=${currentPage + 1}, PageSize=${pageSize}, medicalRecordNo=${medicalRecordNo})}">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

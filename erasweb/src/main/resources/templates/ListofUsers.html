@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<title>User List</title>
+</head>
+<body>
+	<div th:replace="fragments/header :: navbar"></div>
+	<form role="form" method="post" th:action="@{/user/usersearchbylastname}" >
+	<div class="container">                     
+	
+		<div class="input-group">
+			<input type="text" class="form-control" name="lastname" 
+				aria-label="Text input with segmented dropdown button">
+			<div class="input-group-append">
+				<button type="submit"  class="btn btn-outline-secondary"   >Search
+					by LastName</button>
+			</div>
+		</div>
+		<div class="input-group">
+			<input type="text" class="form-control" name="firstname"
+				aria-label="Text input with segmented dropdown button">
+			<div class="input-group-append">
+				<button type="submit" class="btn btn-outline-secondary" th:formaction="@{/user/usersearchbyfirstname}">Search
+					by FirstName</button>
+			</div>
+		</div>
+	 
+
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Edit</th>
+					<th scope="col">LastName</th>
+					<th scope="col">FirstName</th>
+					<th scope="col">MiddleName</th>
+					<th scope="col">MiddleName</th>
+					<th scope="col">Local No</th>
+					<th scope="col">Employee No.</th>
+					<th scope="col">Active</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user:${users} ">
+					<th scope="row"><a type="button" class="btn btn-info"
+						th:href="@{user/{iDUser}/view(iDUser=${user.iDUser})}">Edit</a>
+					<td th:text=${user.lastName}></td>
+					<td th:text=${user.firstName}></td>
+					<td th:text=${user.middleName}></td>
+					<td th:text=${user.emailAdd}></td>
+					<td th:text=${user.localNo}></td>
+					<td th:text=${user.employeeNo}></td>
+					<td th:text=${user.isActive}></td>
+
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
+	</form>
+</body>
+</html>

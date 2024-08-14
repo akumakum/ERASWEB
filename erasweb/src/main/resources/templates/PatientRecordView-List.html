@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Record Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Record Form</h1>
+        <form th:action="@{/patientRecord/save}" th:object="${patientRecord}" method="post">
+            <ul class="nav nav-tabs" id="patientRecordTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Tab 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Tab 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Tab 3</a>
+                </li>
+                <!-- Add more tabs as needed -->
+            </ul>
+            <div class="tab-content" id="patientRecordTabContent">
+                <!-- Tab 1 Content -->
+                <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                    <div class="form-group">
+                        <label for="hospitalCode">Hospital Code:</label>
+                        <input type="text" id="hospitalCode" class="form-control" th:field="*{hospitalCode}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="medicalRecordNo">Medical Record No:</label>
+                        <input type="text" id="medicalRecordNo" class="form-control" th:field="*{medicalRecordNo}" />
+                    </div>
+                    <!-- Add other fields for Tab 1 -->
+                </div>
+                <!-- Tab 2 Content -->
+                <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                    <div class="form-group">
+                        <label for="preopEducation">Preop Education:</label>
+                        <input type="text" id="preopEducation" class="form-control" th:field="*{preopEducation}" />
+                    </div>
+                    <!-- Add other fields for Tab 2 -->
+                </div>
+                <!-- Tab 3 Content -->
+                <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                    <div class="form-group">
+                        <label for="antibioticProphylaxis">Antibiotic Prophylaxis:</label>
+                        <input type="text" id="antibioticProphylaxis" class="form-control" th:field="*{antibioticProphylaxis}" />
+                    </div>
+                    <!-- Add other fields for Tab 3 -->
+                </div>
+                <!-- Add more tab content as needed -->
+            </div>
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='/patientRecord/list'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

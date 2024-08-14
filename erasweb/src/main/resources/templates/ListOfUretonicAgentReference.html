@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <meta charset="ISO-8859-1">
+    <title>UterotonicAgent Reference List</title>
+    <style>
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .table-sticky-header thead th {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/Patientheader :: navbar"></div>
+    <center>
+        <h1>UterotonicAgent Reference List</h1>
+    </center>
+    <main class="flex-shrink-0">
+        <div class="container">
+            <div class="table-container">
+                <table class="table table-striped table-sticky-header">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Created By</th>
+                            <th>Modified By</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="agent : ${uterotonicAgentReference}">
+                            <td th:text="${agent.uterotonicAgentRefId}">ID</td>
+                            <td th:text="${agent.uterotonicAgentDesc}">Description</td>
+                            <td th:text="${agent.createdBy}"></td>
+                            <td th:text="${agent.modifiedBy}"></td>
+                            <td>
+                                <a th:href="@{/patientrecords/uterotonicAgentReference/edit/{id}(id=${agent.uterotonicAgentRefId})}" class="btn btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="/patientrecords/uterotonicAgentReference/new" class="btn btn-success">Add New Uterotonic Agent Reference</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

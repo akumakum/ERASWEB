@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Patient Record Form</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Patient Record Form</h2>
+        <form th:action="@{/patientrecords/patient/add-save}" th:object="${patientRecord}" method="post">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                    <!-- Hidden Fields for processing -->
+                    <input type="hidden" id="patientID" name="patientID" class="form-control" th:field="*{patientID}" />
+                    <!-- Other form fields -->
+                    <div class="form-group">
+                        <label for="medicalRecordNo">Medical Record No</label>
+                        <input type="text" id="medicalRecordNo" class="form-control" th:field="*{medicalRecordNo}" placeholder="Medical Record No" />
+                    </div>
+
+                    <table class="table" id="uterotonicAgentsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Uterotonic Agent</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="agent, iterStat : ${patientRecord.uterotonicAgent}">
+                                <td th:text="${iterStat.index + 1}">1</td>
+                                <td>
+                                    <input type="hidden" th:field="*{uterotonicAgent[__${iterStat.index}__].id}" />
+                                    <select class="form-control agent-select" th:field="*{uterotonicAgent[__${iterStat.index}__].comRefID}">
+                                        <!-- Options will be dynamically loaded -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" onclick="removeRowAgent(this)">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary" onclick="addRowAgent()">Add Uterotonic Agent</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    </div>
+
+    <script>
+        var agentsData = [];
+
+        function loadAgentsOptions(selectElement) {
+            selectElement.empty(); // Clear any existing options
+            selectElement.append('<option value="">Select Uterotonic Agent</option>'); // Add default option
+            agentsData.forEach(function(agent) {
+                selectElement.append('<option value="' + agent.uterotonicAgentRefId + '">' + agent.uterotonicAgentDesc + '</option>');
+            });
+        }
+
+        function addRowAgent() {
+            var table = document.getElementById('uterotonicAgentsTable').getElementsByTagName('tbody')[0];
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            cell1.innerHTML = rowCount + 1;
+            cell2.innerHTML = '<input type="hidden" name="uterotonicAgent[' + rowCount + '].id" />' +
+                              '<select class="form-control agent-select" name="uterotonicAgent[' + rowCount + '].comRefID"></select>';
+            cell3.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowAgent(this)">Remove</button>';
+
+            loadAgentsOptions($(cell2).find('.agent-select'));
+        }
+
+        function removeRowAgent(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        $(document).ready(function() {
+            $.ajax({
+                url: '/ajax/uterotonicAgentRef/all',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    agentsData = data;
+                    $('.agent-select').each(function() {
+                        loadAgentsOptions($(this));
+                    });
+                },
+                error: function(error) {
+                    console.error("Error loading uterotonic agents:", error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
