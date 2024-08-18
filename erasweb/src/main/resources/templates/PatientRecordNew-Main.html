@@ -51,8 +51,8 @@
 					aria-selected="false">Other</a></li>
 			</ul>
 		</header>
-		<form id="patientRecordForm"
-			th:action="@{/patientrecords/patient/add-save}"
+	<form id="patientRecordForm"
+			 th:action="@{/patientrecords/patient/{variable}(variable=${endpointSelector})}"
 			th:object="${patientRecord}" method="post">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active p-4" id="tab1" role="tabpanel"
@@ -60,6 +60,7 @@
 					<!-- Hidden Fields for processing -->
 					<input type="hidden" id="patientID" name="patientID"
 						class="form-control" th:field="*{patientID}" />
+					<input type="hidden" id="hiddenField" name="hiddenField">
 					<!-- Other form fields -->
 					<div class="form-group">
 						<label for="medicalRecordNo">Medical Record No</label> <input
@@ -706,6 +707,30 @@
 	</div>
 
 	<script>
+	// test for multiple submit endpoints
+    function updateFormAction() {
+            var hiddenField = document.getElementById('hiddenField');
+            var form = document.getElementById('patientRecordForm');
+            var hiddenValue = hiddenField.value;
+            form.action = `/patientrecords/patient/${hiddenValue}`;
+            //alert(hiddenValue);
+        }
+
+        function setHiddenFieldValue(newValue) {
+           // alert('running set hidden');
+            var hiddenField = document.getElementById('hiddenField');
+            hiddenField.value = newValue;
+            updateFormAction(); // Update the form action when the hidden field value changes
+        }
+
+        // Ensure the DOM is fully loaded before running the initial setup
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initial call to set the form action based on the initial hidden field value
+           // updateFormAction();
+        });
+
+	
+	// test for multiple submit endpoints
 	   var comorbiditiesData = [];
 
 	    function loadComorbiditiesOptions(selectElement) {
@@ -1076,7 +1101,9 @@ $(document).ready(function() {
                             if (response.status === 'found') {
                                 // Populate the form with the retrieved data
                                 var patientRecord = response.patientRecord;
-                      
+                        
+                         $('#patientID').val(patientRecord.patientID);     
+                                
 						$('#sequenceNo').val(patientRecord.sequenceNo);
                        	$('#dateofBirth').val(patientRecord.dateofBirth);
                         $('#gender').val(patientRecord.gender); // Ensure proper display format
@@ -1151,17 +1178,16 @@ $(document).ready(function() {
                         populateUterotonicAgents(patientRecord.uterotonicAgent);
                         populateSystemicOpioids(patientRecord.systemicOpioids);
                         populateOralOpioidsAgents(patientRecord.oralOpioidsAgents);
-                        
-                        
-                        
-                                // Populate other fields as needed
+                       
+                        // Control to update or insert record :update
+                   
+                        setHiddenFieldValue('edit-save');
+                                
                             } else {
                                 // Handle the case where the patient record is not found
                                 alert("Patient record not found. You can add a new record.");
-                                
-                               
-
-                                // Optionally focus on the first field for new record entry
+                                setHiddenFieldValue('add-save');
+                                 // Optionally focus on the first field for new record entry
                                 $('#eRASStatus').focus();
                             }
                         },
@@ -1171,7 +1197,9 @@ $(document).ready(function() {
                     });
                 }
             });
+            
         });
+ 
  
   // Function to populate comorbidities in the table
   function populateComorbidities(comorbidities) {

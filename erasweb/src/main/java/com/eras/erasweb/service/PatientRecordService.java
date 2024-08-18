@@ -24,4 +24,7 @@ public interface PatientRecordService {
     
  // Method to get the PatientRecord with the maximum sequence number for a given MRN
     public PatientRecord getPatientRecordByMrnAndMaxSequenceNumber(String mrn);
+    
+    void updatePatientRecord(PatientRecord patientRecord);
+  
 }                                               

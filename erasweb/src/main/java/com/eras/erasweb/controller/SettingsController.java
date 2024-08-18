@@ -828,7 +828,8 @@ public class SettingsController {
 	@GetMapping("/patientrecords/patient/add")
 	public String addPatientRecordForm(Model model) {
 		// ComorbiditiesDTO comorbiditiesDTO = new ComorbiditiesDTO();
-
+		model.addAttribute("variable", "");
+		
 		PatientRecord patientRecord = new PatientRecord();
 		patientRecord.setSurgicalSpecialty("OBGY");
 		patientRecord.setSurgicalType("C-Section");
@@ -1193,7 +1194,7 @@ public class SettingsController {
 //		patientRecord.setSystemicOpioids(patientRecord.getSystemicOpioids());
 		
 		existingPatientRecord.setHospitalCode(patientRecord.getHospitalCode());
-		existingPatientRecord.setMedicalRecordNo(patientRecord.getMedicalRecordNo());
+		//where patient_record_id=2existingPatientRecord.setMedicalRecordNo(patientRecord.getMedicalRecordNo());
 		existingPatientRecord.setSequenceNo(patientRecord.getSequenceNo());
 
 		existingPatientRecord.setDateofBirth(patientRecord.getDateofBirth());
@@ -1280,9 +1281,12 @@ public class SettingsController {
 		
 		
 		
-		//existingPatientRecord
-		patienRecordService.save(existingPatientRecord);
-
+		//save new record  existingPatientRecord
+		//patienRecordService.save(existingPatientRecord);
+		
+		// update patient Record
+		patienRecordService.updatePatientRecord(existingPatientRecord);
+		
 		// patienRecordService.save(patientRecord); // Save patient record
 
 		return "redirect:/patient/home";

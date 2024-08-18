@@ -62,14 +62,18 @@ public class PatientRecordController {
 	public ResponseEntity<Map<String, Object>> getPatientRecord(@RequestParam String medicalRecordNo) {
 		PatientRecord patientRecord = patientRecordService.getPatientRecordByMrnAndMaxSequenceNumber(medicalRecordNo);
 		Map<String, Object> response = new HashMap<>();
+		
 		if (patientRecord != null) {
+			
 			response.put("status", "found");
 			response.put("patientRecord", patientRecord);
+			response.put("endpointSelector", "/patientrecords/patient/edit-save");
 			//response.put("dateOfBirth",patientRecord.getDateofBirth());
 			// Add other references as needed
 		} else {
 			response.put("status", "not_found");
 			response.put("eRASStatusOptions", Estatus.values());
+			response.put("endpointSelector", "/patientrecords/patient/add-save");
 		}
 		return ResponseEntity.ok(response);
 	}
