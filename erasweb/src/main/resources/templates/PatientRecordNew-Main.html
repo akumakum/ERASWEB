@@ -72,7 +72,7 @@
 							<label for="sequenceNo"
 								style="line-height: 28px; vertical-align: bottom;">Episode
 								No</label>
-							<button class="btn btn-link ml-2" style="vertical-align: middle;">New
+							<button type="button" style="vertical-align: middle;" onclick="getNextSequence()">New
 								Episode</button>
 						</div>
 						<div class="col-md-4"></div>
@@ -724,10 +724,10 @@
         }
 
         // Ensure the DOM is fully loaded before running the initial setup
-        document.addEventListener('DOMContentLoaded', function () {
+ //       document.addEventListener('DOMContentLoaded', function () {
             // Initial call to set the form action based on the initial hidden field value
            // updateFormAction();
-        });
+//        });
 
 	
 	// test for multiple submit endpoints
@@ -1266,7 +1266,34 @@ $(document).ready(function() {
 	    }
 	}
   
-  
+
+  function getNextSequence() {
+	    var mrnNo = $('#medicalRecordNo').val();
+	    if (mrnNo) {
+	        $.ajax({
+	            url: '/ajax/get-next-sequence',
+	            type: 'GET',
+	            data: { mrnNo: mrnNo },
+	            success: function(response) {
+	               
+	                var sequenceNumber = response;
+	                if (sequenceNumber > 1) {
+	                    var userConfirmed = confirm("Existing MRN No is found. Do you want to create a new record with sequence No: " + response + "?");
+	                    if (!userConfirmed) {
+	                        //$('#sequenceNo').val(''); // Clear the sequence number if user says No
+	                    } else {
+	                    	 $('#sequenceNo').val(response);
+	                    	 setHiddenFieldValue('add-save');
+	                    	 $('#patientID').val(0);
+	                    }
+	                }
+	            },
+	            error: function() {
+	                //$('#sequenceNo').val('');
+	            }
+	        });
+	    }
+	}
     </script>
 </body>
 </html>
