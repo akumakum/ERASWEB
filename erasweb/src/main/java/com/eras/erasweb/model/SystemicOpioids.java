@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class SystemicOpioids {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long systemicOpioidsId;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "patientRecord_id")
     private PatientRecord patient;

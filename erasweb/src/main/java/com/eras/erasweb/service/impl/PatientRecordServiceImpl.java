@@ -81,6 +81,15 @@ public class PatientRecordServiceImpl implements PatientRecordService {
         Page<PatientRecord> patientRecords = patientRecordRepository.findAll(pageable);
         return patientRecords.map(this::mapToDTO);
     }
+
+	@Override
+	public PatientRecord getPatientRecordByMrnAndMaxSequenceNumber(String mrn) {
+		// Method to get the PatientRecord with the maximum sequence number for a given MRN
+		PatientRecord tmprepo;
+		tmprepo= patientRecordRepository.findByMrnAndMaxSequenceNumber(mrn);
+	        return patientRecordRepository.findByMrnAndMaxSequenceNumber(mrn);
+	    }
+	
 }
 
 	

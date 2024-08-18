@@ -936,9 +936,9 @@ public class SettingsController {
 			e.printStackTrace();
 		}
 
-		if (patientRecord.getSequenceNo() != 0) {
-			patientRecord.setSequenceNo(mrnSequenceService.getNextSequenceNumber(patientRecord.getMedicalRecordNo()));
-		}
+//		if (patientRecord.getSequenceNo() != 0) {
+//			patientRecord.setSequenceNo(mrnSequenceService.getNextSequenceNumber(patientRecord.getMedicalRecordNo()));
+//		}
 
 		patienRecordService.save(patientRecord); // Save patient record
 
@@ -958,6 +958,31 @@ public class SettingsController {
 		model.addAttribute("systemicOpioidsReference", systemicOpioidsReference);
 		model.addAttribute("oralOpioidsAgentsReference", oralOpioidsAgentsReference);
 		model.addAttribute("uterotonicAgentReference", uterotonicAgentReference);
+		
+		model.addAttribute("patientRecord", patientRecord);
+		model.addAttribute("eRASStatusOptions", Estatus.values());
+		model.addAttribute("genderOptions", Gender.values());
+		model.addAttribute("eRASStatusYNOptions", EstatusYorN.values());
+		model.addAttribute("aSASCOREOptions", ASASCORE.values());
+		model.addAttribute("preopEducationOptions", PreopEducation.values());
+		model.addAttribute("antibioticProphylaxisOptions", AntibioticProphylaxis.values());
+		model.addAttribute("pONVProphylaxisOptions", PONVProphylaxis.values());
+		model.addAttribute("pONVProphylaxisAgentsOptions", PONVProphylaxisAgents.values());
+		model.addAttribute("anaesthesiaTypeOptions", AnaesthesiaType.values());
+		model.addAttribute("iTMUsedOptions", ITMUsed.values());
+		model.addAttribute("systemicOpioidsUseddOptions", SystemicOpioidsUsed.values());
+		model.addAttribute("skinToSkinOptions", SkinToSkin.values());
+		model.addAttribute("trialofVoidOptions", TrialofVoid.values());
+		model.addAttribute("recatheterisedOptions", Recatheterised.values());
+		model.addAttribute("regularParacetamolOptions", RegularParacetamol.values());
+		model.addAttribute("oralOpioidsOptions", OralOpioids.values());
+		model.addAttribute("inHospitalComplicationsOptions", InHospitalComplications.values());
+		model.addAttribute("day300FollowupOptions", Day300Followup.values());
+		model.addAttribute("postDischargeComplicationsOptions", PostDischargeComplications.values());
+		model.addAttribute("readmisionOptions", Readmision.values());
+		model.addAttribute("pROMneededOptions", PROMneeded.values());
+		model.addAttribute("pROMToolUsedOptions", PROMToolUsed.values());
+		model.addAttribute("regularNSAIDSOptions", RegularNSAIDS.values());
 
 		return "PatientRecordEdit-Main";
 	}
@@ -1040,9 +1065,9 @@ public class SettingsController {
 			e.printStackTrace();
 		}
 
-		if (patientRecord.getSequenceNo() != 0) {
-			patientRecord.setSequenceNo(mrnSequenceService.getNextSequenceNumber(patientRecord.getMedicalRecordNo()));
-		}
+//		if (patientRecord.getSequenceNo() != 0) {
+//			patientRecord.setSequenceNo(mrnSequenceService.getNextSequenceNumber(patientRecord.getMedicalRecordNo()));
+//		}
 
 		// Check Add and removed tables
 
@@ -1161,6 +1186,101 @@ public class SettingsController {
 			}
 		}
 		// Save the updated PatientRecord
+
+//		patientRecord.setComorbidities(existingPatientRecord.getComorbidities());
+//		patientRecord.setOralOpioidsAgents(existingPatientRecord.getOralOpioidsAgents());
+//		patientRecord.setUterotonicAgent(patientRecord.getUterotonicAgent());
+//		patientRecord.setSystemicOpioids(patientRecord.getSystemicOpioids());
+		
+		existingPatientRecord.setHospitalCode(patientRecord.getHospitalCode());
+		existingPatientRecord.setMedicalRecordNo(patientRecord.getMedicalRecordNo());
+		existingPatientRecord.setSequenceNo(patientRecord.getSequenceNo());
+
+		existingPatientRecord.setDateofBirth(patientRecord.getDateofBirth());
+		existingPatientRecord.setGender(patientRecord.getGender());
+		existingPatientRecord.setERASStatus(patientRecord.getERASStatus());
+
+		existingPatientRecord.setAdmissionDate(patientRecord.getAdmissionDate());
+		existingPatientRecord.setAdmissionTime(patientRecord.getAdmissionTime());
+		existingPatientRecord.setAge(patientRecord.getAge());
+		existingPatientRecord.setHeight(patientRecord.getHeight());
+		existingPatientRecord.setWeight(patientRecord.getWeight());
+
+		existingPatientRecord.setCalculatedBMI(patientRecord.getCalculatedBMI());
+
+		existingPatientRecord.setSurgicalSpecialty(patientRecord.getSurgicalSpecialty());
+		existingPatientRecord.setSurgicalType(patientRecord.getSurgicalType());
+
+		existingPatientRecord.setERASStatusYN(patientRecord.getERASStatusYN());
+		existingPatientRecord.setASAScore(patientRecord.getASAScore());
+
+		existingPatientRecord.setPreopEducation(patientRecord.getPreopEducation());
+		existingPatientRecord.setPreopLastFluidsDate(patientRecord.getPreopLastFluidsDate());
+		existingPatientRecord.setPreopLasFluidsTime(patientRecord.getPreopLasFluidsTime());
+		existingPatientRecord.setPreopFastingStatusFluids(patientRecord.getPreopFastingStatusFluids());
+		existingPatientRecord.setPreopLastSolidsDate(patientRecord.getPreopLastSolidsDate());
+		existingPatientRecord.setPreopLastSolidsTime(patientRecord.getPreopLastSolidsTime());
+		existingPatientRecord.setPreopFastingStatusSolids(patientRecord.getPreopFastingStatusSolids());
+		existingPatientRecord.setAntibioticProphylaxis(patientRecord.getAntibioticProphylaxis());
+		existingPatientRecord.setPONVProphylaxis(patientRecord.getPONVProphylaxis());
+		existingPatientRecord.setPONVProphylaxisAgents(patientRecord.getPONVProphylaxisAgents());
+		existingPatientRecord.setAnaesthesiaType(patientRecord.getAnaesthesiaType());
+		existingPatientRecord.setITMUsed(patientRecord.getITMUsed());
+		existingPatientRecord.setSystemicOpioidsUsed(patientRecord.getSystemicOpioidsUsed());
+
+		existingPatientRecord.setSkinToSkin(patientRecord.getSkinToSkin());
+		existingPatientRecord.setPostOpOralFluidIntakeDate(patientRecord.getPostOpOralFluidIntakeDate());
+		existingPatientRecord.setPostOpOralFluidIntakeTime(patientRecord.getPostOpOralFluidIntakeTime());
+		existingPatientRecord.setTimetoOralFluidIntake(patientRecord.getTimetoOralFluidIntake());
+		existingPatientRecord.setPostOpOralSolidsIntakeDate(patientRecord.getPostOpOralSolidsIntakeDate());
+		existingPatientRecord.setPostOpOralSolidsIntakeTime(patientRecord.getPostOpOralSolidsIntakeTime());
+		existingPatientRecord.setTimetoOralSolidsIntake(patientRecord.getTimetoOralSolidsIntake());
+		existingPatientRecord.setMobilisationStartDate(patientRecord.getMobilisationStartDate());
+		existingPatientRecord.setMobilisationStartTime(patientRecord.getMobilisationStartTime());
+		existingPatientRecord.setTimetoMobilisationFromSurgery(patientRecord.getTimetoMobilisationFromSurgery());
+		existingPatientRecord.setRemovalUrinaryCatheterDate(patientRecord.getRemovalUrinaryCatheterDate());
+		existingPatientRecord.setRemovalUrinaryCatheterTime(patientRecord.getRemovalUrinaryCatheterTime());
+
+		existingPatientRecord.setTrialofVoid(patientRecord.getTrialofVoid());
+		existingPatientRecord.setRecatheterised(patientRecord.getRecatheterised());
+		existingPatientRecord.setRegularParacetamol(patientRecord.getRegularParacetamol());
+		existingPatientRecord.setRegularNSAIDS(patientRecord.getRegularNSAIDS());
+		existingPatientRecord.setOralOpioids(patientRecord.getOralOpioids());
+
+		existingPatientRecord.setFirstDoseOralOpioidsDate(patientRecord.getFirstDoseOralOpioidsDate());
+		existingPatientRecord.setFirstDoseOralOpioidsTime(patientRecord.getFirstDoseOralOpioidsTime());
+		existingPatientRecord.setTotalOralOpioids(patientRecord.getTotalOralOpioids());
+		existingPatientRecord.setTotalIVFluidsGivenml(patientRecord.getTotalIVFluidsGivenml());
+		existingPatientRecord.setDischargeDate(patientRecord.getDischargeDate());
+		existingPatientRecord.setDischargeTime(patientRecord.getDischargeTime());
+
+		existingPatientRecord.setDurationOfStayHrs(patientRecord.getDurationOfStayHrs());
+		existingPatientRecord.setLengthOfStayNights(patientRecord.getLengthOfStayNights());
+
+		existingPatientRecord.setInHospitalComplications(patientRecord.getInHospitalComplications());
+		existingPatientRecord.setInHospitalComplicationsnotes(patientRecord.getInHospitalComplicationsnotes());
+
+		existingPatientRecord.setDay300Followup(patientRecord.getDay300Followup());
+		existingPatientRecord.setPostDischargeComplications(patientRecord.getPostDischargeComplications());
+		existingPatientRecord.setPostDischargeComplicationsnotes(patientRecord.getPostDischargeComplicationsnotes());
+
+		existingPatientRecord.setReadmision(patientRecord.getReadmision());
+		existingPatientRecord.setReadmisionNotes(patientRecord.getReadmisionNotes());
+
+		existingPatientRecord.setPROMneeded(patientRecord.getPROMneeded());
+		existingPatientRecord.setPROMToolUsed(patientRecord.getPROMToolUsed());
+//		existingPatientRecord.setPROMResults(patientRecord.getPROMResults());
+		existingPatientRecord.setIsInactive(patientRecord.getIsInactive());
+
+		existingPatientRecord.setDateCreated(patientRecord.getDateCreated());
+		existingPatientRecord.setDateUpdated(patientRecord.getDateUpdated());
+		existingPatientRecord.setCreatedBy(patientRecord.getCreatedBy());
+		existingPatientRecord.setModifiedBy(patientRecord.getModifiedBy());
+		existingPatientRecord.setComplianceCount(patientRecord.getComplianceCount());
+		
+		
+		
+		//existingPatientRecord
 		patienRecordService.save(existingPatientRecord);
 
 		// patienRecordService.save(patientRecord); // Save patient record

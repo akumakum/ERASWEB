@@ -1006,7 +1006,7 @@ $(document).ready(function() {
     let isValid = true;
     let errorMessage = "";
     
-
+	alert("validating..");
 
     // Validate Comorbidities
     $('#comorbiditiesTable tbody tr').each(function() {
@@ -1054,56 +1054,191 @@ $(document).ready(function() {
         }
     });
 
-    if (!isValid) {
-        alert(errorMessage);
-        event.preventDefault(); // Prevent form submission
-    }
+//    if (!isValid) {
+//        alert(errorMessage);
+//        event.preventDefault(); // Prevent form submission
+//    }
 }
- $(document).ready(function() {
-	    $('#patientRecordForm').on('submit', validateForm);
-	});
+// $(document).ready(function() {
+//	    $('#patientRecordForm').on('submit', validateForm);
+//	});
 
  // MRN Sequence Query
- $(document).ready(function() {
-        $('#medicalRecordNo').on('blur', function() {
-            var mrnNo = $(this).val();
-            if (mrnNo) {
-                $.ajax({
-                    url: '/ajax/get-next-sequence',
-                    type: 'GET',
-                    data: { mrnNo: mrnNo },
-                    success: function(response) {
-                        $('#sequenceNo').val(response);
-                        var sequenceNumber = response;
-                        if(sequenceNumber>1){
-                        var userConfirmed = confirm("Existing MRN No, is found, Do you want to create a new record with a sequence No: " + response + "?");
-                        if (!userConfirmed) {
-                            $('#sequenceNo').val(''); // Clear the sequence number if user says No
-                        }
-                        }
-                    },
-                    error: function() {
-                        $('#sequenceNo').val('');
-                    }
-                });
-				// Fetch date of birth
+  $(document).ready(function() {
+            $('#medicalRecordNo').on('blur', function() {
+                var medicalRecordNo = $(this).val();
+                if (medicalRecordNo) {
                     $.ajax({
-                        url: '/ajax/get-date-of-birth',
+                        url: '/patientrecords/getpatientrecord',
                         type: 'GET',
-                        data: { medicalRecordNo: mrnNo },
+                        data: { medicalRecordNo: medicalRecordNo },
                         success: function(response) {
-                            $('#dateofBirth').val(response);
+                            if (response.status === 'found') {
+                                // Populate the form with the retrieved data
+                                var patientRecord = response.patientRecord;
+                      
+						$('#sequenceNo').val(patientRecord.sequenceNo);
+                       	$('#dateofBirth').val(patientRecord.dateofBirth);
+                        $('#gender').val(patientRecord.gender); // Ensure proper display format
+                        $('#eRASStatus').val(patientRecord.eRASStatus); // Ensure proper display format
+                        $('#admissionDate').val(patientRecord.admissionDate);
+                        $('#admissionTime').val(patientRecord.admissionTime);
+                        $('#age').val(patientRecord.age);
+                        $('#height').val(patientRecord.height);
+                        $('#weight').val(patientRecord.weight);
+                        $('#calculatedBMI').val(patientRecord.calculatedBMI);
+                        $('#surgicalSpecialty').val(patientRecord.surgicalSpecialty);
+                        $('#surgicalType').val(patientRecord.surgicalType);
+                        $('#eRASStatusYN').val(patientRecord.eRASStatusYN);
+                        $('#aSAScore').val(patientRecord.aSAScore);
+                        $('#preopEducation').val(patientRecord.preopEducation);
+                        $('#preopLastFluidsDate').val(patientRecord.preopLastFluidsDate);
+                        $('#preopLastFluidsTime').val(patientRecord.preopLastFluidsTime);
+                        $('#preopFastingStatusFluids').val(patientRecord.preopFastingStatusFluids);
+                        $('#preopLastSolidsDate').val(patientRecord.preopLastSolidsDate);
+                        $('#preopLastSolidsTime').val(patientRecord.preopLastSolidsTime);
+                        $('#preopFastingStatusSolids').val(patientRecord.preopFastingStatusSolids);
+                        $('#antibioticProphylaxis').val(patientRecord.antibioticProphylaxis);
+                        $('#pONVProphylaxis').val(patientRecord.pONVProphylaxis);
+                        $('#pONVProphylaxisAgents').val(patientRecord.pONVProphylaxisAgents);
+                        $('#anaesthesiaType').val(patientRecord.anaesthesiaType);
+                        $('#iTMUsed').val(patientRecord.iTMUsed);
+                        $('#systemicOpioidsUsed').val(patientRecord.systemicOpioidsUsed);
+                        $('#skinToSkin').val(patientRecord.skinToSkin);
+                        $('#postOpOralFluidIntakeDate').val(patientRecord.postOpOralFluidIntakeDate);
+                        $('#postOpOralFluidIntakeTime').val(patientRecord.postOpOralFluidIntakeTime);
+                        $('#timetoOralFluidIntake').val(patientRecord.timetoOralFluidIntake);
+                        $('#postOpOralSolidsIntakeDate').val(patientRecord.postOpOralSolidsIntakeDate);
+                        $('#PostOpOralSolidsIntakeTime').val(patientRecord.PostOpOralSolidsIntakeTime);
+                        $('#timetoOralSolidsIntake').val(patientRecord.timetoOralSolidsIntake);
+                        $('#mobilisationStartDate').val(patientRecord.mobilisationStartDate);
+                        $('#mobilisationStartTime').val(patientRecord.mobilisationStartTime);
+                        $('#timetoMobilisationFromSurgery').val(patientRecord.timetoMobilisationFromSurgery);
+                        $('#removalUrinaryCatheterDate').val(patientRecord.removalUrinaryCatheterDate);
+                        $('#removalUrinaryCatheterTime').val(patientRecord.removalUrinaryCatheterTime);
+                        $('#trialofVoid').val(patientRecord.trialofVoid);
+                        $('#recatheterised').val(patientRecord.recatheterised);
+                        $('#regularParacetamol').val(patientRecord.regularParacetamol);
+                        $('#regularNSAIDS').val(patientRecord.regularNSAIDS);
+                        $('#oralOpioids').val(patientRecord.oralOpioids);
+                        $('#firstDoseOralOpioidsDate').val(patientRecord.firstDoseOralOpioidsDate);
+                        $('#firstDoseOralOpioidsTime').val(patientRecord.firstDoseOralOpioidsTime);
+                        $('#totalOralOpioids').val(patientRecord.totalOralOpioids);
+                        $('#totalIVFluidsGivenml').val(patientRecord.totalIVFluidsGivenml);
+                        $('#dischargeDate').val(patientRecord.dischargeDate);
+                        $('#dischargeTime').val(patientRecord.dischargeTime);
+                        $('#durationOfStayHrs').val(patientRecord.durationOfStayHrs);
+                        $('#lengthOfStayNights').val(patientRecord.lengthOfStayNights);
+                        $('#inHospitalComplications').val(patientRecord.inHospitalComplications);
+                        $('#inHospitalComplicationsnotes').val(patientRecord.inHospitalComplicationsnotes);
+                        $('#day300Followup').val(patientRecord.day300Followup);
+                        $('#postDischargeComplications').val(patientRecord.postDischargeComplications);
+                        $('#postDischargeComplicationsnotes').val(patientRecord.postDischargeComplicationsnotes);
+                        $('#readmision').val(patientRecord.readmision);
+                        $('#ReadmisionNotes').val(patientRecord.ReadmisionNotes);
+                        $('#pROMneeded').val(patientRecord.pROMneeded);
+                        $('#pROMToolUsed').val(patientRecord.pROMToolUsed);
+                        $('#pROmResults').val(patientRecord.pROmResults);
+                        $('#IsInactive').val(patientRecord.IsInactive);
+                        $('#dateCreated').val(patientRecord.dateCreated);
+                        $('#dateUpdated').val(patientRecord.dateUpdated);
+                        $('#createdBy').val(patientRecord.createdBy);
+                        $('#modifiedBy').val(patientRecord.modifiedBy);
+                        $('#complianceCount').val(patientRecord.complianceCount);
+
+                        // Populate comorbidities table
+                        populateComorbidities(patientRecord.comorbidities);
+                        populateUterotonicAgents(patientRecord.uterotonicAgent);
+                        populateSystemicOpioids(patientRecord.systemicOpioids);
+                        populateOralOpioidsAgents(patientRecord.oralOpioidsAgents);
+                        
+                        
+                        
+                                // Populate other fields as needed
+                            } else {
+                                // Handle the case where the patient record is not found
+                                alert("Patient record not found. You can add a new record.");
+                                
+                               
+
+                                // Optionally focus on the first field for new record entry
+                                $('#eRASStatus').focus();
+                            }
                         },
                         error: function() {
-                            $('#dateofBirth').val('');
+                            alert("An error occurred while retrieving the patient record.");
                         }
                     });
-            } else {
-                $('#sequenceNo').val('');
-				$('#dateofBirth').val('');
-            }
+                }
+            });
         });
-    });
+ 
+  // Function to populate comorbidities in the table
+  function populateComorbidities(comorbidities) {
+      var comorbiditiesTableBody = $('#comorbiditiesTable tbody');
+      comorbiditiesTableBody.empty(); // Clear existing rows
+
+      if (comorbidities && comorbidities.length > 0) {
+          comorbidities.forEach(function(comorbidity, index) {
+              addRow(); // Add a new row for each comorbidity
+              var newRow = comorbiditiesTableBody.find('tr:last-child');
+
+              // Set the hidden input value and the selected value of the select element
+              newRow.find('input[type="hidden"]').val(comorbidity.id);
+              newRow.find('.comorbidity-select').val(comorbidity.comRefID);
+          });
+      }
+  }
+    
+  function populateUterotonicAgents(agents) {
+	    var agentsTableBody = $('#uterotonicAgentsTable tbody');
+	    agentsTableBody.empty(); // Clear existing rows
+
+	    if (agents && agents.length > 0) {
+	        agents.forEach(function(agent, index) {
+	            addRowAgent(); // Add a new row for each agent
+	            var newRow = agentsTableBody.find('tr:last-child');
+
+	            // Set the hidden input value and the selected value of the select element
+	            newRow.find('input[type="hidden"]').val(agent.id);
+	            newRow.find('.agent-select').val(agent.comRefID);
+	        });
+	    }
+	}
+  
+  function populateSystemicOpioids(opioids) {
+	    var opioidsTableBody = $('#systemicOpioidsTable tbody');
+	    opioidsTableBody.empty(); // Clear existing rows
+
+	    if (opioids && opioids.length > 0) {
+	        opioids.forEach(function(opioid, index) {
+	            addRowSysOp(); // Add a new row for each opioid
+	            var newRow = opioidsTableBody.find('tr:last-child');
+
+	            // Set the hidden input value and the selected value of the select element
+	            newRow.find('input[type="number"]').val(opioid.dosage);
+	            newRow.find('.opioid-select').val(opioid.comRefID);
+	        });
+	    }
+	}
+  
+  function populateOralOpioidsAgents(agents) {
+	    var agentsTableBody = $('#oralOpioidsAgentsTable tbody');
+	    agentsTableBody.empty(); // Clear existing rows
+
+	    if (agents && agents.length > 0) {
+	        agents.forEach(function(agent, index) {
+	            addRowAgentO(); // Add a new row for each agent
+	            var newRow = agentsTableBody.find('tr:last-child');
+
+	            // Set the hidden input value and the selected value of the select element
+	            newRow.find('input[type="number"]').val(agent.dosage);
+	            newRow.find('.agent-select').val(agent.comRefID);
+	        });
+	    }
+	}
+  
+  
     </script>
 </body>
 </html>

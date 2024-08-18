@@ -21,4 +21,7 @@ public interface PatientRecordRepository extends JpaRepository<PatientRecord, Lo
 
     Page<PatientRecord> findByMedicalRecordNoContaining(String medicalRecordNo, Pageable pageable);
     Page<PatientRecord> findAll(Pageable pageable);
+    
+    @Query("SELECT pr FROM PatientRecord pr WHERE pr.medicalRecordNo = :mrn AND pr.sequenceNo = (SELECT MAX(pr2.sequenceNo) FROM PatientRecord pr2 WHERE pr2.medicalRecordNo = :mrn)")
+    PatientRecord findByMrnAndMaxSequenceNumber(@Param("mrn") String mrn);
 }

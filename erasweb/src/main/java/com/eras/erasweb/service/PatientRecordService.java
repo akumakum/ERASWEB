@@ -21,4 +21,7 @@ public interface PatientRecordService {
     public Optional<LocalDate> getDateOfBirthByMedicalRecordNo(String medicalRecordNo);
     Page<PatientRecordDTO> searchByMedicalRecordNo(String medicalRecordNo, Pageable pageable);
     Page<PatientRecordDTO> findPaginated(Pageable pageable);
+    
+ // Method to get the PatientRecord with the maximum sequence number for a given MRN
+    public PatientRecord getPatientRecordByMrnAndMaxSequenceNumber(String mrn);
 }                                               

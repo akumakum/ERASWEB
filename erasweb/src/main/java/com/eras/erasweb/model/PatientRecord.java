@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,6 +60,7 @@ public class PatientRecord {
     private EstatusYorN eRASStatusYN;
     private ASASCORE aSAScore;
     
+    @JsonManagedReference
     @OneToMany(mappedBy = "patient",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comorbidities> comorbidities ;
     
@@ -76,6 +79,7 @@ public class PatientRecord {
 	private	ITMUsed	iTMUsed;
 	private	SystemicOpioidsUsed	systemicOpioidsUsed;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SystemicOpioids> systemicOpioids;
 	    
@@ -83,6 +87,7 @@ public class PatientRecord {
 	
 	private	SkinToSkin	skinToSkin;
 	
+	@JsonManagedReference
     @OneToMany(mappedBy = "patient",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UterotonicAgent> uterotonicAgent;
   
@@ -104,6 +109,7 @@ public class PatientRecord {
 	private	RegularNSAIDS	regularNSAIDS;
 	private	OralOpioids	oralOpioids;
 	
+	 @JsonManagedReference
 	 @OneToMany(mappedBy = "patient",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	 private List<OralOpioidsAgents> oralOpioidsAgents;	
 	

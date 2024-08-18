@@ -42,6 +42,7 @@
                         <tr>
                             <th>Medical Record No</th>
                             <th>Sequence No</th>
+                            <th>Record ID</th>
                             <th>Date Created</th>
                             <th>Created By</th>
                             <th>Date Modified</th>
@@ -53,12 +54,13 @@
                         <tr th:each="record : ${records}">
                             <td th:text="${record.medicalRecordNo}"></td>
                             <td th:text="${record.sequenceNo}"></td>
+                            <td th:text="${record.patientID}"></td>
                             <td th:text="${record.dateCreated}"></td>
                             <td th:text="${record.createdBy}"></td>
                             <td th:text="${record.dateUpdated}"></td>
                             <td th:text="${record.modifiedBy}"></td>
                             <td>
-                                <a th:href="@{/patientrecords/patient/{mrn}(mrn=${record.medicalRecordNo})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/patientrecords/patient/{mrn}(mrn=${record.patientID})}" class="btn btn-primary">Edit</a>
                             </td>
                         </tr>
                     </tbody>
@@ -66,10 +68,10 @@
                 <div class="d-flex justify-content-between">
                     <ul class="pagination">
                         <li class="page-item" th:if="${currentPage > 1}">
-                            <a class="page-link" th:href="@{/patientrecords/patientrecords(PageNo=${currentPage - 1}, PageSize=${pageSize}, medicalRecordNo=${medicalRecordNo})}">Previous</a>
+                            <a class="page-link" th:href="@{/patientrecords(PageNo=${currentPage - 1}, PageSize=${pageSize}, medicalRecordNo=${medicalRecordNo})}">Previous</a>
                         </li>
                         <li class="page-item" th:if="${currentPage < totalPages}">
-                            <a class="page-link" th:href="@{/patientrecords/patientrecords(PageNo=${currentPage + 1}, PageSize=${pageSize}, medicalRecordNo=${medicalRecordNo})}">Next</a>
+                            <a class="page-link" th:href="@{/patientrecords(PageNo=${currentPage + 1}, PageSize=${pageSize}, medicalRecordNo=${medicalRecordNo})}">Next</a>
                         </li>
                     </ul>
                 </div>
