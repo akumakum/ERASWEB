@@ -1277,8 +1277,8 @@ $(document).ready(function() {
 	            success: function(response) {
 	               
 	                var sequenceNumber = response;
-	                if (sequenceNumber > 1) {
-	                    var userConfirmed = confirm("Existing MRN No is found. Do you want to create a new record with sequence No: " + response + "?");
+	                if (sequenceNumber => 0) {
+	                    var userConfirmed = confirm(" Do you want to create a new record with sequence No: " + response + "?");
 	                    if (!userConfirmed) {
 	                        //$('#sequenceNo').val(''); // Clear the sequence number if user says No
 	                    } else {
@@ -1287,9 +1287,13 @@ $(document).ready(function() {
 	                    	 $('#patientID').val(0);
 	                    }
 	                }
+	                else {
+	                	alert('negative');
+	                }
 	            },
 	            error: function() {
 	                //$('#sequenceNo').val('');
+	                alert("error retrieving sequence No.")
 	            }
 	        });
 	    }

@@ -8,6 +8,8 @@ import com.eras.erasweb.model.PatientRecord;
 import com.eras.erasweb.repository.PatientRecordRepository;
 import com.eras.erasweb.service.PatientRecordService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,6 +167,18 @@ public class PatientRecordServiceImpl implements PatientRecordService {
                 patientRecord.getIsInactive(),
                 patientRecord.getModifiedBy()
         );
+    }
+	
+	@PersistenceContext
+    private EntityManager entityManager;
+
+    public PatientRecord saveNewPatientRecord(PatientRecord patientRecord) {
+        // Detach the entity
+        entityManager.detach(patientRecord);
+        // Set ID to null to ensure a new record is inserted
+        patientRecord.setPatientID(0);   
+        // Save the new entity
+        return patientRecordRepository.save(patientRecord);
     }
 	
 }

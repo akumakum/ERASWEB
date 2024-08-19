@@ -26,5 +26,7 @@ public interface PatientRecordService {
     public PatientRecord getPatientRecordByMrnAndMaxSequenceNumber(String mrn);
     
     void updatePatientRecord(PatientRecord patientRecord);
+    
+    PatientRecord saveNewPatientRecord(PatientRecord patientRecord);
   
 }                                               

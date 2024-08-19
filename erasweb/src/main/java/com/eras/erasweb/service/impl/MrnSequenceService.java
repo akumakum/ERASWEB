@@ -25,15 +25,33 @@ public class MrnSequenceService {
         Integer nextSequenceNumber = maxSequenceNumber + 1;
 
         // Save the new sequence
-        MrnSequence mrnSequence = new MrnSequence();
-        mrnSequence.setMrnNo(mrnNo);
-        mrnSequence.setSequenceNumber(nextSequenceNumber);
-        mrnSequenceRepository.save(mrnSequence);
+       // MrnSequence mrnSequence = new MrnSequence();
+       // mrnSequence.setMrnNo(mrnNo);
+       // mrnSequence.setSequenceNumber(nextSequenceNumber);
+       // mrnSequenceRepository.save(mrnSequence);
 
         return nextSequenceNumber;
     }
     
-
+    public boolean saveSequence(String mrn,Integer mrnSequenceNo)
+    {
+    	Integer maxSequenceNumber = getCurrentMaxSequenceNumber(mrn);
+        Integer nextSequenceNumber = maxSequenceNumber + 1;
+    	
+        if(nextSequenceNumber==mrnSequenceNo) {
+        // Save the new sequence
+        MrnSequence mrnSequence = new MrnSequence();
+        mrnSequence.setMrnNo(mrn);
+        mrnSequence.setSequenceNumber(nextSequenceNumber);
+        mrnSequenceRepository.save(mrnSequence);
+        return true;
+        }
+        else
+        {
+        	 return false;
+        }
+       
+    }
     
     
     

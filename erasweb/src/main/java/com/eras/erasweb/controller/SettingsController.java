@@ -941,8 +941,12 @@ public class SettingsController {
 //			patientRecord.setSequenceNo(mrnSequenceService.getNextSequenceNumber(patientRecord.getMedicalRecordNo()));
 //		}
 
-		patienRecordService.save(patientRecord); // Save patient record
-
+		
+		// try to make a new record hoping to insert 
+		patienRecordService.saveNewPatientRecord(patientRecord);
+		// try to make a new record hoping to insert 
+		// patienRecordService.save(patientRecord); // Save patient record
+		mrnSequenceService.saveSequence(patientRecord.getMedicalRecordNo(),patientRecord.getSequenceNo());
 		return "redirect:/patient/home";
 	}
 
