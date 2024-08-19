@@ -17,7 +17,7 @@
 	<main class="flex-shrink-0">
 		<div class="container">
 			<form role="form" method="post"
-				th:action="@{/patientrecords/oral-opioidsreference/save}" th:object="${oralOpioidsAgentsReference}">
+				th:action="@{/maintenance/oral-opioidsreference/save}" th:object="${oralOpioidsAgentsReference}">
 				<input type="hidden" id="oralOpioidsAgentsRefId" name="oralOpioidsAgentsRefId" th:field=*{oralOpioidsAgentsRefId} />
 				<div class="form-group">
 					<label for="oralOpioidsAgentsRefDesc">Description</label>

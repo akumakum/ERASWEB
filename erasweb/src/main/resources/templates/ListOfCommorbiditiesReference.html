@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <div th:replace="fragments/patientheader :: navbar"></div>
+    <div th:replace="fragments/header :: navbar"></div>
     <center>
         <h1>Comorbidities Reference List</h1>
     </center>
@@ -46,7 +46,7 @@
                             <td th:text="${comorbidityReference.createdBy}"></td>
                             <td th:text="${comorbidityReference.modifiedBy}"></td>
                             <td>
-                                <a th:href="@{/patientrecords/comorbiditiesreference/edit/{id}(id=${comorbidityReference.commorbidityId})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/maintenance/comorbiditiesreference/edit/{id}(id=${comorbidityReference.commorbidityId})}" class="btn btn-primary">Edit</a>
 <!--                                <a th:href="@{/maintenance/comorbiditiesreference/delete/{id}(id=${comorbidityReference.commorbidityId})}" class="btn btn-danger">Delete</a>-->
                             </td>
                         </tr>

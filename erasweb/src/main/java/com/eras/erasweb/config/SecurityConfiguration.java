@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                     registry.requestMatchers("/maintenance/**").hasRole("ADMIN");
                     registry.requestMatchers("/reports/**").hasRole("REPORTS");
                     registry.requestMatchers("/ajax/**").permitAll();
+                    registry.requestMatchers("/backup/**").permitAll();
                     registry.anyRequest().authenticated();
                 //    registry.anyRequest().permitAll();
                     

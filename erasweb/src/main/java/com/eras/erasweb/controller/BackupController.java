@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/backup")
+@RequestMapping("/maintenance/backup")
 public class BackupController {
 
     @Value("${spring.datasource.url}")

@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <div th:replace="fragments/Patientheader :: navbar"></div>
+    <div th:replace="fragments/header :: navbar"></div>
     <center>
         <h1>UterotonicAgent Reference List</h1>
     </center>
@@ -46,12 +46,12 @@
                             <td th:text="${agent.createdBy}"></td>
                             <td th:text="${agent.modifiedBy}"></td>
                             <td>
-                                <a th:href="@{/patientrecords/uterotonicAgentReference/edit/{id}(id=${agent.uterotonicAgentRefId})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/maintenance/uterotonicAgentReference/edit/{id}(id=${agent.uterotonicAgentRefId})}" class="btn btn-primary">Edit</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <a href="/patientrecords/uterotonicAgentReference/new" class="btn btn-success">Add New Uterotonic Agent Reference</a>
+<!--                <a href="/maintenance/uterotonicAgentReference/new" class="btn btn-success">Add New Uterotonic Agent Reference</a>-->
             </div>
         </div>
     </main>

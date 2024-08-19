@@ -10,14 +10,14 @@
 </head>
 <body>
 
-	<div th:replace="fragments/Patientheader :: navbar"></div>
+	<div th:replace="fragments/header :: navbar"></div>
 	<center>
 		<H1>Uterotonic Agent Reference Settings</H1>
 	</center>
 	<main class="flex-shrink-0">
 		<div class="container">
 			<form role="form" method="post"
-				th:action="@{/patientrecords/uterotonicAgentReference/save}" th:object="${uterotonicAgentReference}">
+				th:action="@{/maintenance/uterotonicAgentReference/save}" th:object="${uterotonicAgentReference}">
 				<input type="hidden" id="uterotonicAgentRefId" name="uterotonicAgentRefId" th:field=*{uterotonicAgentRefId} />
 				<div class="form-group">
 					<label for="uterotonicAgentDesc">Description</label>

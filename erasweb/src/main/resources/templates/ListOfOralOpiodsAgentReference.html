@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <div th:replace="fragments/Patientheader :: navbar"></div>
+    <div th:replace="fragments/header :: navbar"></div>
     <center>
         <h1>Oral Opiods Reference List</h1>
     </center>
@@ -46,7 +46,7 @@
                             <td th:text="${oralOpioidsAgentsReference.createdBy}"></td>
                             <td th:text="${oralOpioidsAgentsReference.modifiedBy}"></td>
                             <td>
-                                <a th:href="@{/patientrecords/oral-opioidsreference/edit/{id}(id=${oralOpioidsAgentsReference.oralOpioidsAgentsRefId})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/maintenance/oral-opioidsreference/edit/{id}(id=${oralOpioidsAgentsReference.oralOpioidsAgentsRefId})}" class="btn btn-primary">Edit</a>
 <!--                                <a th:href="@{/maintenance/comorbiditiesreference/delete/{id}(id=${comorbidityReference.commorbidityId})}" class="btn btn-danger">Delete</a>-->
                             </td>
                         </tr>

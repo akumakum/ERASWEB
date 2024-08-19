@@ -14,7 +14,7 @@ import com.eras.erasweb.model.OralOpioidsAgentsReference;
 import java.util.List;
 
 @Controller
-@RequestMapping("/patientrecords/oral-opioidsreference")
+@RequestMapping("/maintenance/oral-opioidsreference")
 public class OralOpioidsAgentsReferenceController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class OralOpioidsAgentsReferenceController {
         
     	oralOpioidsAgentsReferenceService.save(dto);
         redirectAttributes.addFlashAttribute("message", "Oral Opioids Agents Reference saved successfully.");
-        return "redirect:/patientrecords/oral-opioidsreference";
+        return "redirect:/maintenance/oral-opioidsreference";
     }
 
     @GetMapping("/edit/{id}")

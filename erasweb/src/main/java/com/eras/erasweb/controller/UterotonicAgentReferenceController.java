@@ -18,7 +18,7 @@ import com.eras.erasweb.model.UterotonicAgentReference;
 import java.util.List;
 
 @Controller
-@RequestMapping("/patientrecords/uterotonicAgentReference")
+@RequestMapping("/maintenance/uterotonicAgentReference")
 public class UterotonicAgentReferenceController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class UterotonicAgentReferenceController {
     	uterotonicAgentReferenceService.save(dto);
     	
         redirectAttributes.addFlashAttribute("message", "systemic Opioids Agents Reference saved successfully.");
-        return "redirect:/patientrecords/uterotonicAgentReference";
+        return "redirect:/maintenance/uterotonicAgentReference";
     }
 
     @GetMapping("/edit/{id}")

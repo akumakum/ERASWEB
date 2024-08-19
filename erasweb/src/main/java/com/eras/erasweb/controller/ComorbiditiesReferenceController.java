@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/patientrecords/comorbiditiesreference")
+@RequestMapping("/maintenance/comorbiditiesreference")
 public class ComorbiditiesReferenceController {
 
     @Autowired
@@ -54,7 +54,7 @@ public class ComorbiditiesReferenceController {
 
         try {
             comorbiditiesReferenceService.updateReference(comorbiditiesReferenceDTO); // UpdateReference(comorbiditiesReferenceDTO);
-            return "redirect:/patientrecords/comorbiditiesreference/list";
+            return "redirect:/maintenance/comorbiditiesreference/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "An error occurred while updating the comorbidity reference. Please try again.");
             
@@ -71,7 +71,7 @@ public class ComorbiditiesReferenceController {
 
         try {
             comorbiditiesReferenceService.createOrUpdateReference(comorbiditiesReferenceDTO);
-            return "redirect:/patientrecords/comorbiditiesreference/list";
+            return "redirect:/maintenance/comorbiditiesreference/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", result.getFieldError());
             

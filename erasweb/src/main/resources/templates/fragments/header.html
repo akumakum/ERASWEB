@@ -43,13 +43,21 @@
                             <a class="dropdown-item" th:href="@{/maintenance/usertypes/usertypelistall}">View /Edit User Types</a>
                             <a class="dropdown-item" th:href="@{/maintenance/userposition/userposition-new}">Add User Positions</a>
                             <a class="dropdown-item" th:href="@{/maintenance/userposition/userpositionlistall}">View / Edit User Positions</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/comorbiditiesreference/new}">Add  Comorbidities</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/comorbiditiesreference/list}">View /Edit Comorbidities</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/uterotonicAgentReference/new}">Add Uterotonic Agent</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/uterotonicAgentReference}">View / Edit Uterotonic Agent</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/oral-opioidsreference/new}">Add Oral Opioids </a>
+                            <a class="dropdown-item" th:href="@{/maintenance/oral-opioidsreference}">View / Edit Oral Opioids </a>
+                            <a class="dropdown-item" th:href="@{/maintenance/systemic-opioidsreference/new}">Add Systemic Opioids </a>
+                            <a class="dropdown-item" th:href="@{/maintenance/systemic-opioidsreference}">View / Edit Systemic Opioids</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="databaseDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Other Setups</a>
                         <div class="dropdown-menu" aria-labelledby="databaseDropdown">
-                            <a class="dropdown-item" href="#">Backup Database</a>
-                            <a class="dropdown-item" href="#">Restore Database</a>
+                            <a class="dropdown-item" href="@{/backup/create}">Backup Database</a>
+                            <a class="dropdown-item" href="@{/backup/restore}">Restore Database</a>
                             <a class="dropdown-item" href="#">Archive Records</a>
                             <a class="dropdown-item" th:href="@{/maintenance/mainpageurl/set}">Create URL Links</a>
                             <a class="dropdown-item" href="#">View URL Links</a>

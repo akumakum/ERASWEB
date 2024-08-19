@@ -19,7 +19,7 @@ import com.eras.erasweb.model.SystemicOpioidsReference;
 import java.util.List;
 
 @Controller
-@RequestMapping("/patientrecords/systemic-opioidsreference")
+@RequestMapping("/maintenance/systemic-opioidsreference")
 public class SystemicOpioidsReferenceController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class SystemicOpioidsReferenceController {
         
     	systemicOpioidsReferenceService.save(dto);
         redirectAttributes.addFlashAttribute("message", "systemic Opioids Agents Reference saved successfully.");
-        return "redirect:/patientrecords/systemic-opioidsreference";
+        return "redirect:/maintenance/systemic-opioidsreference";
     }
 
     @GetMapping("/edit/{id}")
