@@ -116,9 +116,10 @@ public class SettingsController {
 	public String erasAdminMain(HttpSession session, Model model) {
 		String username = (String) session.getAttribute("username");
 		Hospital hospital = (Hospital) session.getAttribute("hospital");
+		MainPageURL mainPageURL = (MainPageURL) session.getAttribute("mainPageURL");
 		model.addAttribute("username", username);
 		model.addAttribute("hospital", hospital);
-
+		model.addAttribute("mainPageURL", mainPageURL);
 		return "Main";
 	}
 
