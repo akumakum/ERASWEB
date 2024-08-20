@@ -1107,7 +1107,8 @@ $(document).ready(function() {
 						$('#sequenceNo').val(patientRecord.sequenceNo);
                        	$('#dateofBirth').val(patientRecord.dateofBirth);
                         $('#gender').val(patientRecord.gender); // Ensure proper display format
-                        $('#eRASStatus').val(patientRecord.eRASStatus); // Ensure proper display format
+                       
+                        $('#eRASStatus').val(patientRecord.erasstatus); // Ensure proper display format
                         $('#admissionDate').val(patientRecord.admissionDate);
                         $('#admissionTime').val(patientRecord.admissionTime);
                         $('#age').val(patientRecord.age);
@@ -1116,27 +1117,27 @@ $(document).ready(function() {
                         $('#calculatedBMI').val(patientRecord.calculatedBMI);
                         $('#surgicalSpecialty').val(patientRecord.surgicalSpecialty);
                         $('#surgicalType').val(patientRecord.surgicalType);
-                        $('#eRASStatusYN').val(patientRecord.eRASStatusYN);
-                        $('#aSAScore').val(patientRecord.aSAScore);
+                        $('#eRASStatusYN').val(patientRecord.erasstatusYN);
+                        $('#aSAScore').val(patientRecord.asascore);
                         $('#preopEducation').val(patientRecord.preopEducation);
                         $('#preopLastFluidsDate').val(patientRecord.preopLastFluidsDate);
-                        $('#preopLastFluidsTime').val(patientRecord.preopLastFluidsTime);
+                        $('#preopLastFluidsTime').val(patientRecord.preopLasFluidsTime);
                         $('#preopFastingStatusFluids').val(patientRecord.preopFastingStatusFluids);
                         $('#preopLastSolidsDate').val(patientRecord.preopLastSolidsDate);
                         $('#preopLastSolidsTime').val(patientRecord.preopLastSolidsTime);
                         $('#preopFastingStatusSolids').val(patientRecord.preopFastingStatusSolids);
                         $('#antibioticProphylaxis').val(patientRecord.antibioticProphylaxis);
-                        $('#pONVProphylaxis').val(patientRecord.pONVProphylaxis);
-                        $('#pONVProphylaxisAgents').val(patientRecord.pONVProphylaxisAgents);
+                        $('#pONVProphylaxis').val(patientRecord.ponvprophylaxis);
+                        $('#pONVProphylaxisAgents').val(patientRecord.ponvprophylaxisAgents);
                         $('#anaesthesiaType').val(patientRecord.anaesthesiaType);
-                        $('#iTMUsed').val(patientRecord.iTMUsed);
+                        $('#iTMUsed').val(patientRecord.itmused);
                         $('#systemicOpioidsUsed').val(patientRecord.systemicOpioidsUsed);
                         $('#skinToSkin').val(patientRecord.skinToSkin);
                         $('#postOpOralFluidIntakeDate').val(patientRecord.postOpOralFluidIntakeDate);
                         $('#postOpOralFluidIntakeTime').val(patientRecord.postOpOralFluidIntakeTime);
                         $('#timetoOralFluidIntake').val(patientRecord.timetoOralFluidIntake);
                         $('#postOpOralSolidsIntakeDate').val(patientRecord.postOpOralSolidsIntakeDate);
-                        $('#PostOpOralSolidsIntakeTime').val(patientRecord.PostOpOralSolidsIntakeTime);
+                        $('#PostOpOralSolidsIntakeTime').val(patientRecord.postOpOralSolidsIntakeTime);
                         $('#timetoOralSolidsIntake').val(patientRecord.timetoOralSolidsIntake);
                         $('#mobilisationStartDate').val(patientRecord.mobilisationStartDate);
                         $('#mobilisationStartTime').val(patientRecord.mobilisationStartTime);
@@ -1162,17 +1163,18 @@ $(document).ready(function() {
                         $('#postDischargeComplications').val(patientRecord.postDischargeComplications);
                         $('#postDischargeComplicationsnotes').val(patientRecord.postDischargeComplicationsnotes);
                         $('#readmision').val(patientRecord.readmision);
-                        $('#ReadmisionNotes').val(patientRecord.ReadmisionNotes);
-                        $('#pROMneeded').val(patientRecord.pROMneeded);
-                        $('#pROMToolUsed').val(patientRecord.pROMToolUsed);
-                        $('#pROmResults').val(patientRecord.pROmResults);
-                        $('#IsInactive').val(patientRecord.IsInactive);
+                        $('#ReadmisionNotes').val(patientRecord.readmisionNotes);
+                        $('#pROMneeded').val(patientRecord.promneeded);
+                        $('#pROMToolUsed').val(patientRecord.promtoolUsed);
+                        $('#pROmResults').val(patientRecord.promResults);
+                        $('#IsInactive').val(patientRecord.isInactive);
                         $('#dateCreated').val(patientRecord.dateCreated);
                         $('#dateUpdated').val(patientRecord.dateUpdated);
                         $('#createdBy').val(patientRecord.createdBy);
                         $('#modifiedBy').val(patientRecord.modifiedBy);
                         $('#complianceCount').val(patientRecord.complianceCount);
 
+                        
                         // Populate comorbidities table
                         populateComorbidities(patientRecord.comorbidities);
                         populateUterotonicAgents(patientRecord.uterotonicAgent);
@@ -1284,7 +1286,7 @@ $(document).ready(function() {
 	                    } else {
 	                    	 $('#sequenceNo').val(response);
 	                    	 setHiddenFieldValue('add-save');
-	                    	 $('#patientID').val(0);
+	                    	// $('#patientID').val(0);
 	                    }
 	                }
 	                else {
