@@ -1275,7 +1275,7 @@ public class SettingsController {
 
 		existingPatientRecord.setPROMneeded(patientRecord.getPROMneeded());
 		existingPatientRecord.setPROMToolUsed(patientRecord.getPROMToolUsed());
-//		existingPatientRecord.setPROMResults(patientRecord.getPROMResults());
+		existingPatientRecord.setPROmResults(patientRecord.getPROmResults());
 		existingPatientRecord.setIsInactive(patientRecord.getIsInactive());
 
 		existingPatientRecord.setDateCreated(patientRecord.getDateCreated());

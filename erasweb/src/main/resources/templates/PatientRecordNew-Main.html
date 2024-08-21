@@ -111,6 +111,7 @@
 					<div class="form-group">
 						<label for="eRASStatus">ERAS Status</label> <select
 							id="eRASStatus" class="form-control" th:field="*{eRASStatus}">
+						<option value="" th:selected="${#fields.hasErrors('eRASStatus')} ? true : (${eRASStatus} == null)">Select ERAS Status</option>
 							<option th:each="status : ${eRASStatusOptions}"
 								th:value="${status}" th:text="${status}">Status</option>
 						</select>
@@ -166,6 +167,7 @@
 					<div class="form-group">
 						<label for="eRASStatusYN">ERAS Status Y/N</label> <select
 							id="eRASStatusYN" class="form-control" th:field="*{eRASStatusYN}">
+							<option value="" th:selected="${#fields.hasErrors('eRASStatusYN')} ? true : (${eRASStatusYN} == null)">Select ERAS Status Y/N</option>
 							<option th:each="status : ${eRASStatusYNOptions}"
 								th:value="${status}" th:text="${status}">eRASStatusYNOptions</option>
 						</select>
@@ -175,6 +177,7 @@
 					<div class="form-group">
 						<label for="aSAScore">ASA Score</label> <select id="aSAScore"
 							class="form-control" th:field="*{aSAScore}">
+							<option value="" th:selected="${#fields.hasErrors('aSAScore')} ? true : (${aSAScore} == null)">Select ASA Score</option>		
 							<option th:each="score : ${aSASCOREOptions}" th:value="${score}"
 								th:text="${score.getScore()}">ASA Score</option>
 						</select>
@@ -219,6 +222,7 @@
 							<label for="preopEducation">PreopEducation</label> <select
 								id="preopEducation" class="form-control"
 								th:field="*{preopEducation}">
+								<option value="" th:selected="${#fields.hasErrors('preopEducation')} ? true : (${preopEducation} == null)">Pre op Education</option>
 								<option th:each="status : ${preopEducationOptions}"
 									th:value="${status}" th:text="${status}">Gender</option>
 							</select>
@@ -274,6 +278,7 @@
 							<label for="antibioticProphylaxis">Antibiotic Prophylaxis</label>
 							<select id="antibioticProphylaxis" class="form-control"
 								th:field="*{antibioticProphylaxis}">
+								<option value="" th:selected="${#fields.hasErrors('antibioticProphylaxis')} ? true : (${antibioticProphylaxis} == null)">Select ERAS Status Y/N</option>
 								<option th:each="status : ${antibioticProphylaxisOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -283,6 +288,7 @@
 							<label for="pONVProphylaxis">PONV Prophylaxis</label> <select
 								id="pONVProphylaxis" class="form-control"
 								th:field="*{pONVProphylaxis}">
+								<option value="" th:selected="${#fields.hasErrors('pONVProphylaxis')} ? true : (${pONVProphylaxis} == null)">PONV Prophylaxis</option>
 								<option th:each="status : ${pONVProphylaxisOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -292,6 +298,7 @@
 							<label for="pONVProphylaxisAgents">PONV Prophylaxis
 								Agents</label> <select id="pONVProphylaxisAgents" class="form-control"
 								th:field="*{pONVProphylaxisAgents}">
+								<option value="" th:selected="${#fields.hasErrors('pONVProphylaxisAgents')} ? true : (${pONVProphylaxisAgents} == null)">Select PONV Prophylaxis Agent</option>
 								<option th:each="agent : ${pONVProphylaxisAgentsOptions}"
 									th:value="${agent}" th:text="${agent.getScore()}">PONV
 									Prophylaxis Agents</option>
@@ -302,6 +309,7 @@
 							<label for="anaesthesiaType">Anaesthesia Type</label> <select
 								id="anaesthesiaType" class="form-control"
 								th:field="*{anaesthesiaType}">
+								<option value="" th:selected="${#fields.hasErrors('anaesthesiaType')} ? true : (${anaesthesiaType} == null)">Anaesthesia Type</option>
 								<option th:each="status : ${anaesthesiaTypeOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -310,6 +318,7 @@
 						<div class="form-group">
 							<label for="iTMUsed">ITMUsed</label> <select id="iTMUsed"
 								class="form-control" th:field="*{iTMUsed}">
+								<option value="" th:selected="${#fields.hasErrors('iTMUsed')} ? true : (${iTMUsed} == null)">ITMUsed</option>
 								<option th:each="status : ${iTMUsedOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -319,6 +328,7 @@
 							<label for="systemicOpioidsUsed">Systemic Opioids Used</label> <select
 								id="systemicOpioidsUsed" class="form-control"
 								th:field="*{systemicOpioidsUsed}">
+								<option value="" th:selected="${#fields.hasErrors('systemicOpioidsUsed')} ? true : (${systemicOpioidsUsed} == null)">Select ERAS Status Y/N</option>
 								<option th:each="status : ${systemicOpioidsUseddOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -360,6 +370,7 @@
 						<div class="form-group">
 							<label for="skinToSkin">Skin to Skin</label> <select
 								id="skinToSkin" class="form-control" th:field="*{skinToSkin}">
+								<option value="" th:selected="${#fields.hasErrors('skinToSkin')} ? true : (${skinToSkin} == null)">Select Skin to Skin</option>
 								<option th:each="status : ${skinToSkinOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -491,6 +502,7 @@
 					<div class="form-group">
 						<label for="trialofVoid">Trial of Void</label> <select
 							id="trialofVoid" class="form-control" th:field="*{trialofVoid}">
+							<option value="" th:selected="${#fields.hasErrors('trialofVoid')} ? true : (${trialofVoid} == null)">Select Trial of Void</option>
 							<option th:each="status : ${trialofVoidOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -500,6 +512,7 @@
 						<label for="recatheterised">Recatheterised</label> <select
 							id="recatheterised" class="form-control"
 							th:field="*{recatheterised}">
+							<option value="" th:selected="${#fields.hasErrors('recatheterised')} ? true : (${recatheterised} == null)">Select Recatheterised</option>
 							<option th:each="status : ${recatheterisedOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -509,6 +522,7 @@
 						<label for="regularParacetamol">Regular Paracetamol</label> <select
 							id="regularParacetamol" class="form-control"
 							th:field="*{regularParacetamol}">
+							<option value="" th:selected="${#fields.hasErrors('regularParacetamol')} ? true : (${regularParacetamol} == null)">Select Regular Paracetamol</option>
 							<option th:each="status : ${regularParacetamolOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -526,6 +540,7 @@
 						<label for="regularNSAIDS">Regular NSAIDS</label> <select
 							id="regularNSAIDS" class="form-control"
 							th:field="*{regularNSAIDS}">
+							<option value="" th:selected="${#fields.hasErrors('regularNSAIDS')} ? true : (${regularNSAIDS} == null)">Select ERAS Status Y/N</option>
 							<option th:each="status : ${regularNSAIDSOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -533,6 +548,7 @@
 					<div class="form-group">
 						<label for="oralOpioids">Oral Opioids</label> <select
 							id="oralOpioids" class="form-control" th:field="*{oralOpioids}">
+							<option value="" th:selected="${#fields.hasErrors('oralOpioids')} ? true : (${oralOpioids} == null)">Select ERAS Status Y/N</option>
 							<option th:each="status : ${oralOpioidsOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -597,6 +613,7 @@
 						<label for="inHospitalComplications">In Hospital
 							Complications</label> <select id="oralOpioids" class="form-control"
 							th:field="*{inHospitalComplications}">
+							<option value="" th:selected="${#fields.hasErrors('inHospitalComplications')} ? true : (${inHospitalComplications} == null)">Select In house complications</option>
 							<option th:each="status : ${inHospitalComplicationsOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -616,6 +633,7 @@
 						<label for="Day300Followup">Day 300 Follow up</label> <select
 							id="Day300Followup" class="form-control"
 							th:field="*{day300Followup}">
+							<option value="" th:selected="${#fields.hasErrors('day300Followup')} ? true : (${day300Followup} == null)">Select ERAS Status Y/N</option>
 							<option th:each="status : ${day300FollowupOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -632,6 +650,7 @@
 						<label for="postDischargeComplications">Post Discharge
 							Complications</label> <select id="postDischargeComplications"
 							class="form-control" th:field="*{postDischargeComplications}">
+							<option value="" th:selected="${#fields.hasErrors('postDischargeComplications')} ? true : (${postDischargeComplications} == null)">Select Post Discharge Complications</option>
 							<option th:each="status : ${postDischargeComplicationsOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -654,6 +673,7 @@
 					<div class="form-group">
 						<label for="readmision">Re Admission</label> <select
 							id="readmision" class="form-control" th:field="*{readmision}">
+							<option value="" th:selected="${#fields.hasErrors('readmision')} ? true : (${readmision} == null)">Re Admission</option>
 							<option th:each="status : ${readmisionOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -670,6 +690,7 @@
 					<div class="form-group">
 						<label for="pROMneeded">PROMneeded</label> <select id="pROMneeded"
 							class="form-control" th:field="*{pROMneeded}">
+							<option value="" th:selected="${#fields.hasErrors('pROMneeded')} ? true : (${pROMneeded} == null)">Select ERAS Status Y/N</option>
 							<option th:each="status : ${pROMneededOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -677,6 +698,7 @@
 							<label for="pROMToolUsed">PROM Tool Used</label> <select
 								id="pROMToolUsed" class="form-control"
 								th:field="*{pROMToolUsed}">
+								<option value="" th:selected="${#fields.hasErrors('pROMToolUsed')} ? true : (${pROMToolUsed} == null)">Select PROM Tool Used</option>
 								<option th:each="status : ${pROMToolUsedOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -1102,6 +1124,9 @@ $(document).ready(function() {
                                 // Populate the form with the retrieved data
                                 var patientRecord = response.patientRecord;
                         
+                                console.log(response.patientRecord);
+
+                                
                          $('#patientID').val(patientRecord.patientID);     
                                 
 						$('#sequenceNo').val(patientRecord.sequenceNo);
@@ -1121,7 +1146,7 @@ $(document).ready(function() {
                         $('#aSAScore').val(patientRecord.asascore);
                         $('#preopEducation').val(patientRecord.preopEducation);
                         $('#preopLastFluidsDate').val(patientRecord.preopLastFluidsDate);
-                        $('#preopLastFluidsTime').val(patientRecord.preopLasFluidsTime);
+                        $('#preopLasFluidsTime').val(patientRecord.preopLasFluidsTime);
                         $('#preopFastingStatusFluids').val(patientRecord.preopFastingStatusFluids);
                         $('#preopLastSolidsDate').val(patientRecord.preopLastSolidsDate);
                         $('#preopLastSolidsTime').val(patientRecord.preopLastSolidsTime);
@@ -1189,8 +1214,30 @@ $(document).ready(function() {
                                 // Handle the case where the patient record is not found
                                 alert("Patient record not found. You can add a new record.");
                                 setHiddenFieldValue('add-save');
+                                // all selection fields should be empty if there 
                                  // Optionally focus on the first field for new record entry
-                                $('#eRASStatus').focus();
+                                $('#eRASStatus').value("");
+                                $('#eRASStatusYN').value("");
+                                $('#aSAScore').value("");
+                                $('#preopEducation').value("");
+                                $('#antibioticProphylaxis').value("");
+                                $('#pONVProphylaxis').value("");
+                                $('#pONVProphylaxisAgents').value("");
+                                $('#anaesthesiaType').value("");
+                                $('#iTMUsed').value("");
+                                $('#systemicOpioidsUsed').value("");
+                                $('#skinToSkin').value("");
+                                $('#trialofVoid').value("");
+                                $('#recatheterised').value("");
+                                $('#regularParacetamol').value("");
+                                $('#regularNSAIDS').value("");
+                                $('#oralOpioids').value("");
+                                $('#inHospitalComplications').value("");
+                                $('#day300Followup').value("");
+                                $('#postDischargeComplications').value("");
+                                $('#readmision').value("");
+                                $('#pROMneeded').value("");
+                                $('#pROMToolUsed').value("");
                             }
                         },
                         error: function() {
