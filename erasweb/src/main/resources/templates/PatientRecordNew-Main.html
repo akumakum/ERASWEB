@@ -51,16 +51,16 @@
 					aria-selected="false">Other</a></li>
 			</ul>
 		</header>
-	<form id="patientRecordForm"
-			 th:action="@{/patientrecords/patient/{variable}(variable=${endpointSelector})}"
+		<form id="patientRecordForm"
+			th:action="@{/patientrecords/patient/{variable}(variable=${endpointSelector})}"
 			th:object="${patientRecord}" method="post">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active p-4" id="tab1" role="tabpanel"
 					aria-labelledby="tab1-tab">
 					<!-- Hidden Fields for processing -->
 					<input type="hidden" id="patientID" name="patientID"
-						class="form-control" th:field="*{patientID}" />
-					<input type="hidden" id="hiddenField" name="hiddenField">
+						class="form-control" th:field="*{patientID}" /> <input
+						type="hidden" id="hiddenField" name="hiddenField">
 					<!-- Other form fields -->
 					<div class="form-group">
 						<label for="medicalRecordNo">Medical Record No</label> <input
@@ -72,8 +72,8 @@
 							<label for="sequenceNo"
 								style="line-height: 28px; vertical-align: bottom;">Episode
 								No</label>
-							<button type="button" style="vertical-align: middle;" onclick="getNextSequence()">New
-								Episode</button>
+							<button type="button" style="vertical-align: middle;"
+								onclick="getNextSequence()">New Episode</button>
 						</div>
 						<div class="col-md-4"></div>
 					</div>
@@ -111,7 +111,9 @@
 					<div class="form-group">
 						<label for="eRASStatus">ERAS Status</label> <select
 							id="eRASStatus" class="form-control" th:field="*{eRASStatus}">
-						<option value="" th:selected="${#fields.hasErrors('eRASStatus')} ? true : (${eRASStatus} == null)">Select ERAS Status</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('eRASStatus')} ? true : (${eRASStatus} == null)">Select
+								ERAS Status</option>
 							<option th:each="status : ${eRASStatusOptions}"
 								th:value="${status}" th:text="${status}">Status</option>
 						</select>
@@ -167,7 +169,9 @@
 					<div class="form-group">
 						<label for="eRASStatusYN">ERAS Status Y/N</label> <select
 							id="eRASStatusYN" class="form-control" th:field="*{eRASStatusYN}">
-							<option value="" th:selected="${#fields.hasErrors('eRASStatusYN')} ? true : (${eRASStatusYN} == null)">Select ERAS Status Y/N</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('eRASStatusYN')} ? true : (${eRASStatusYN} == null)">Select
+								ERAS Status Y/N</option>
 							<option th:each="status : ${eRASStatusYNOptions}"
 								th:value="${status}" th:text="${status}">eRASStatusYNOptions</option>
 						</select>
@@ -177,7 +181,9 @@
 					<div class="form-group">
 						<label for="aSAScore">ASA Score</label> <select id="aSAScore"
 							class="form-control" th:field="*{aSAScore}">
-							<option value="" th:selected="${#fields.hasErrors('aSAScore')} ? true : (${aSAScore} == null)">Select ASA Score</option>		
+							<option value=""
+								th:selected="${#fields.hasErrors('aSAScore')} ? true : (${aSAScore} == null)">Select
+								ASA Score</option>
 							<option th:each="score : ${aSASCOREOptions}" th:value="${score}"
 								th:text="${score.getScore()}">ASA Score</option>
 						</select>
@@ -222,7 +228,9 @@
 							<label for="preopEducation">PreopEducation</label> <select
 								id="preopEducation" class="form-control"
 								th:field="*{preopEducation}">
-								<option value="" th:selected="${#fields.hasErrors('preopEducation')} ? true : (${preopEducation} == null)">Pre op Education</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('preopEducation')} ? true : (${preopEducation} == null)">Pre
+									op Education</option>
 								<option th:each="status : ${preopEducationOptions}"
 									th:value="${status}" th:text="${status}">Gender</option>
 							</select>
@@ -278,7 +286,9 @@
 							<label for="antibioticProphylaxis">Antibiotic Prophylaxis</label>
 							<select id="antibioticProphylaxis" class="form-control"
 								th:field="*{antibioticProphylaxis}">
-								<option value="" th:selected="${#fields.hasErrors('antibioticProphylaxis')} ? true : (${antibioticProphylaxis} == null)">Select ERAS Status Y/N</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('antibioticProphylaxis')} ? true : (${antibioticProphylaxis} == null)">Select
+									ERAS Status Y/N</option>
 								<option th:each="status : ${antibioticProphylaxisOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -288,7 +298,9 @@
 							<label for="pONVProphylaxis">PONV Prophylaxis</label> <select
 								id="pONVProphylaxis" class="form-control"
 								th:field="*{pONVProphylaxis}">
-								<option value="" th:selected="${#fields.hasErrors('pONVProphylaxis')} ? true : (${pONVProphylaxis} == null)">PONV Prophylaxis</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('pONVProphylaxis')} ? true : (${pONVProphylaxis} == null)">PONV
+									Prophylaxis</option>
 								<option th:each="status : ${pONVProphylaxisOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -298,7 +310,9 @@
 							<label for="pONVProphylaxisAgents">PONV Prophylaxis
 								Agents</label> <select id="pONVProphylaxisAgents" class="form-control"
 								th:field="*{pONVProphylaxisAgents}">
-								<option value="" th:selected="${#fields.hasErrors('pONVProphylaxisAgents')} ? true : (${pONVProphylaxisAgents} == null)">Select PONV Prophylaxis Agent</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('pONVProphylaxisAgents')} ? true : (${pONVProphylaxisAgents} == null)">Select
+									PONV Prophylaxis Agent</option>
 								<option th:each="agent : ${pONVProphylaxisAgentsOptions}"
 									th:value="${agent}" th:text="${agent.getScore()}">PONV
 									Prophylaxis Agents</option>
@@ -309,7 +323,9 @@
 							<label for="anaesthesiaType">Anaesthesia Type</label> <select
 								id="anaesthesiaType" class="form-control"
 								th:field="*{anaesthesiaType}">
-								<option value="" th:selected="${#fields.hasErrors('anaesthesiaType')} ? true : (${anaesthesiaType} == null)">Anaesthesia Type</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('anaesthesiaType')} ? true : (${anaesthesiaType} == null)">Anaesthesia
+									Type</option>
 								<option th:each="status : ${anaesthesiaTypeOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -318,7 +334,8 @@
 						<div class="form-group">
 							<label for="iTMUsed">ITMUsed</label> <select id="iTMUsed"
 								class="form-control" th:field="*{iTMUsed}">
-								<option value="" th:selected="${#fields.hasErrors('iTMUsed')} ? true : (${iTMUsed} == null)">ITMUsed</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('iTMUsed')} ? true : (${iTMUsed} == null)">ITMUsed</option>
 								<option th:each="status : ${iTMUsedOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -328,7 +345,9 @@
 							<label for="systemicOpioidsUsed">Systemic Opioids Used</label> <select
 								id="systemicOpioidsUsed" class="form-control"
 								th:field="*{systemicOpioidsUsed}">
-								<option value="" th:selected="${#fields.hasErrors('systemicOpioidsUsed')} ? true : (${systemicOpioidsUsed} == null)">Select ERAS Status Y/N</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('systemicOpioidsUsed')} ? true : (${systemicOpioidsUsed} == null)">Select
+									ERAS Status Y/N</option>
 								<option th:each="status : ${systemicOpioidsUseddOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -370,7 +389,9 @@
 						<div class="form-group">
 							<label for="skinToSkin">Skin to Skin</label> <select
 								id="skinToSkin" class="form-control" th:field="*{skinToSkin}">
-								<option value="" th:selected="${#fields.hasErrors('skinToSkin')} ? true : (${skinToSkin} == null)">Select Skin to Skin</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('skinToSkin')} ? true : (${skinToSkin} == null)">Select
+									Skin to Skin</option>
 								<option th:each="status : ${skinToSkinOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -502,7 +523,9 @@
 					<div class="form-group">
 						<label for="trialofVoid">Trial of Void</label> <select
 							id="trialofVoid" class="form-control" th:field="*{trialofVoid}">
-							<option value="" th:selected="${#fields.hasErrors('trialofVoid')} ? true : (${trialofVoid} == null)">Select Trial of Void</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('trialofVoid')} ? true : (${trialofVoid} == null)">Select
+								Trial of Void</option>
 							<option th:each="status : ${trialofVoidOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -512,7 +535,9 @@
 						<label for="recatheterised">Recatheterised</label> <select
 							id="recatheterised" class="form-control"
 							th:field="*{recatheterised}">
-							<option value="" th:selected="${#fields.hasErrors('recatheterised')} ? true : (${recatheterised} == null)">Select Recatheterised</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('recatheterised')} ? true : (${recatheterised} == null)">Select
+								Recatheterised</option>
 							<option th:each="status : ${recatheterisedOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -522,7 +547,9 @@
 						<label for="regularParacetamol">Regular Paracetamol</label> <select
 							id="regularParacetamol" class="form-control"
 							th:field="*{regularParacetamol}">
-							<option value="" th:selected="${#fields.hasErrors('regularParacetamol')} ? true : (${regularParacetamol} == null)">Select Regular Paracetamol</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('regularParacetamol')} ? true : (${regularParacetamol} == null)">Select
+								Regular Paracetamol</option>
 							<option th:each="status : ${regularParacetamolOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -540,7 +567,9 @@
 						<label for="regularNSAIDS">Regular NSAIDS</label> <select
 							id="regularNSAIDS" class="form-control"
 							th:field="*{regularNSAIDS}">
-							<option value="" th:selected="${#fields.hasErrors('regularNSAIDS')} ? true : (${regularNSAIDS} == null)">Select ERAS Status Y/N</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('regularNSAIDS')} ? true : (${regularNSAIDS} == null)">Select
+								ERAS Status Y/N</option>
 							<option th:each="status : ${regularNSAIDSOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -548,7 +577,9 @@
 					<div class="form-group">
 						<label for="oralOpioids">Oral Opioids</label> <select
 							id="oralOpioids" class="form-control" th:field="*{oralOpioids}">
-							<option value="" th:selected="${#fields.hasErrors('oralOpioids')} ? true : (${oralOpioids} == null)">Select ERAS Status Y/N</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('oralOpioids')} ? true : (${oralOpioids} == null)">Select
+								ERAS Status Y/N</option>
 							<option th:each="status : ${oralOpioidsOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -561,8 +592,8 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Dosage</th>
 									<th>Oral Opioid Agent</th>
+									<th>Dosage</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -570,13 +601,13 @@
 								<tr
 									th:each="agent, iterStat : ${patientRecord.oralOpioidsAgents}">
 									<td th:text="${iterStat.index + 1}">1</td>
-									<td><input type="number"
-										th:field="*{oralOpioidsAgents[__${iterStat.index}__].dosage}"
-										class="form-control dosage-input" /></td>
 									<td><select class="form-control agent-select"
 										th:field="*{oralOpioidsAgents[__${iterStat.index}__].comRefID}">
 											<!-- Options will be dynamically loaded -->
 									</select></td>
+									<td><input type="number"
+										th:field="*{oralOpioidsAgents[__${iterStat.index}__].dosage}"
+										class="form-control dosage-input" /></td>
 									<td>
 										<button type="button" class="btn btn-danger"
 											onclick="removeRowAgentO(this)">Remove</button>
@@ -611,9 +642,11 @@
 					</div>
 					<div class="form-group">
 						<label for="inHospitalComplications">In Hospital
-							Complications</label> <select id="inHospitalComplications" class="form-control"
-							th:field="*{inHospitalComplications}">
-							<option value="" th:selected="${#fields.hasErrors('inHospitalComplications')} ? true : (${inHospitalComplications} == null)">Select In house complications</option>
+							Complications</label> <select id="inHospitalComplications"
+							class="form-control" th:field="*{inHospitalComplications}">
+							<option value=""
+								th:selected="${#fields.hasErrors('inHospitalComplications')} ? true : (${inHospitalComplications} == null)">Select
+								In house complications</option>
 							<option th:each="status : ${inHospitalComplicationsOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -633,7 +666,9 @@
 						<label for="day300Followup">Day 300 Follow up</label> <select
 							id="day300Followup" class="form-control"
 							th:field="*{day300Followup}">
-							<option value="" th:selected="${#fields.hasErrors('day300Followup')} ? true : (${day300Followup} == null)">Select 300 day follow-up </option>
+							<option value=""
+								th:selected="${#fields.hasErrors('day300Followup')} ? true : (${day300Followup} == null)">Select
+								300 day follow-up</option>
 							<option th:each="status : ${day300FollowupOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -650,7 +685,9 @@
 						<label for="postDischargeComplications">Post Discharge
 							Complications</label> <select id="postDischargeComplications"
 							class="form-control" th:field="*{postDischargeComplications}">
-							<option value="" th:selected="${#fields.hasErrors('postDischargeComplications')} ? true : (${postDischargeComplications} == null)">Select Post Discharge Complications</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('postDischargeComplications')} ? true : (${postDischargeComplications} == null)">Select
+								Post Discharge Complications</option>
 							<option th:each="status : ${postDischargeComplicationsOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -673,7 +710,9 @@
 					<div class="form-group">
 						<label for="readmision">Re Admission</label> <select
 							id="readmision" class="form-control" th:field="*{readmision}">
-							<option value="" th:selected="${#fields.hasErrors('readmision')} ? true : (${readmision} == null)">Re Admission</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('readmision')} ? true : (${readmision} == null)">Re
+								Admission</option>
 							<option th:each="status : ${readmisionOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -690,7 +729,9 @@
 					<div class="form-group">
 						<label for="pROMneeded">PROMneeded</label> <select id="pROMneeded"
 							class="form-control" th:field="*{pROMneeded}">
-							<option value="" th:selected="${#fields.hasErrors('pROMneeded')} ? true : (${pROMneeded} == null)">Select ERAS Status Y/N</option>
+							<option value=""
+								th:selected="${#fields.hasErrors('pROMneeded')} ? true : (${pROMneeded} == null)">Select
+								ERAS Status Y/N</option>
 							<option th:each="status : ${pROMneededOptions}"
 								th:value="${status}" th:text="${status}">Option</option>
 						</select>
@@ -698,7 +739,9 @@
 							<label for="pROMToolUsed">PROM Tool Used</label> <select
 								id="pROMToolUsed" class="form-control"
 								th:field="*{pROMToolUsed}">
-								<option value="" th:selected="${#fields.hasErrors('pROMToolUsed')} ? true : (${pROMToolUsed} == null)">Select PROM Tool Used</option>
+								<option value=""
+									th:selected="${#fields.hasErrors('pROMToolUsed')} ? true : (${pROMToolUsed} == null)">Select
+									PROM Tool Used</option>
 								<option th:each="status : ${pROMToolUsedOptions}"
 									th:value="${status}" th:text="${status}">Option</option>
 							</select>
@@ -972,7 +1015,6 @@ function loadAgentsOptionsO(selectElement) {
     });
 }
 
-
 function addRowAgentO() {
     var table = document.getElementById('oralOpioidsAgentsTable').getElementsByTagName('tbody')[0];
     var rowCount = table.rows.length;
@@ -983,15 +1025,15 @@ function addRowAgentO() {
     var cell4 = row.insertCell(3);
 
     cell1.innerHTML = rowCount + 1;
-    cell2.innerHTML = '<input type="number" name="oralOpioidsAgents[' + rowCount + '].dosage" class="form-control dosage-input-oral"/>';
-    cell3.innerHTML = '<input type="hidden" name="oralOpioidsAgents[' + rowCount + '].id" />' +
+    cell2.innerHTML = '<input type="hidden" name="oralOpioidsAgents[' + rowCount + '].id" />' +
                       '<select class="form-control agent-select" name="oralOpioidsAgents[' + rowCount + '].comRefID"></select>';
+    cell3.innerHTML = '<input type="number" name="oralOpioidsAgents[' + rowCount + '].dosage" class="form-control dosage-input-oral"/>';
     cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowAgentO(this)">Remove</button>';
 
-    loadAgentsOptionsO($(cell3).find('.agent-select'));
+    loadAgentsOptionsO($(cell2).find('.agent-select'));
     
     // Add event listener to the new select element
-    $(cell3).find('.agent-select').change(function() {
+    $(cell2).find('.agent-select').change(function() {
         var dosageInput = $(this).closest('tr').find('.dosage-input-oral');
         if (dosageInput.val().trim() === "") {
             alert('Please enter a dosage before selecting an opioid.');
@@ -1030,6 +1072,7 @@ $(document).ready(function() {
         }
     });
 });
+
 
 //date convert to locale 
       document.addEventListener("DOMContentLoaded", function() {
