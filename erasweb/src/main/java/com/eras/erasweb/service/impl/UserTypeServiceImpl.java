@@ -20,6 +20,8 @@ import com.eras.erasweb.repository.UserTypeRepository;
 import com.eras.erasweb.service.UserTypeService;
 import com.eras.erasweb.utils.*;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class UserTypeServiceImpl implements UserTypeService{
@@ -27,6 +29,8 @@ public class UserTypeServiceImpl implements UserTypeService{
 	private UserTypeRepository userTypeRepository;
 	private UserTypeDTO userTypeDTO;
 	private LocalDateTime today =LocalDateTime.now(); 
+	
+	
 	
 	public UserTypeServiceImpl(UserTypeRepository userTypeRepository) {
         this.userTypeRepository = userTypeRepository;
@@ -105,6 +109,15 @@ public class UserTypeServiceImpl implements UserTypeService{
             throw new RuntimeException("User not found with ID: " + userTypeID);
         }
 		
+	}
+
+	@Override
+	public UserTypeDTO findById(long userTypeID) {
+		
+		UserType usertype =userTypeRepository.findById(userTypeID)
+				 .orElseThrow(() -> new EntityNotFoundException("UserPosition not found with ID: " + userTypeID));
+		
+		return  ModelToDtoDtoToModel.convertToUserTypeDTO(usertype) ;
 	}
 
 

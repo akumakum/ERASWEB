@@ -21,5 +21,7 @@ public interface UserTypeService {
 	 UserType SaveUseType(UserTypeDTO userTypeDTO);
 	 Boolean DeactivateUserType();
 	 void UpdateUserType(UserTypeDTO updatedUsertype,long userTypeID );
+
+	UserTypeDTO findById(long userTypeID);
 	 
 }

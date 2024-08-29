@@ -31,6 +31,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long UserID;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_position_id")
+    private UserPosition userPositions;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_type_id")
+    private UserType userTypes;
+   
     @Column(unique=true,length=10)
 	private String UserDefinedID;
     @Column(unique=true, length=80)
@@ -53,4 +62,6 @@ public class User {
     private LocalDateTime dateUpdated;
     private String createdBy;
     private String modifiedBy;
+    private String confirmPassword;
+    
 }

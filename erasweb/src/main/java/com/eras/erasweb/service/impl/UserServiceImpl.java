@@ -18,11 +18,12 @@ import com.eras.erasweb.dto.LoginResponseDTO;
 import com.eras.erasweb.dto.UserDTO;
 import com.eras.erasweb.dto.UserPositionDTO;
 import com.eras.erasweb.dto.UserTypeDTO;
-import com.eras.erasweb.utils.ModelToDtoDtoToModel;
+import com.eras.erasweb.utils.EntityToDtoConverter;
 import com.eras.erasweb.model.User;
 import com.eras.erasweb.model.UserPosition;
 import com.eras.erasweb.model.UserResponse;
 import com.eras.erasweb.service.UserService;
+import com.eras.erasweb.service.UserTypeService;
 import com.eras.erasweb.repository.*;
 @Service
 
@@ -31,7 +32,12 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	private ModelToDtoDtoToModel modelConverter= new ModelToDtoDtoToModel();
+	
+	@Autowired
+	private UserTypeService userTypeService;
+	
+	private EntityToDtoConverter entityToDtoConverter = new EntityToDtoConverter();
+	
 	public UserServiceImpl (UserRepository userRepository) {
 		this.userRepository=userRepository;
 	}
@@ -45,8 +51,10 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User SaveUser(UserDTO userDTO) {
-		User user = modelConverter.mapToUserDTO(userDTO);
+		User user =  EntityToDtoConverter.convertToUserEntity(userDTO); //modelConverter.mapToUserDTO(userDTO);
 		user.setPassword(passwordEncoder.encode(user.getPassword()) );
+		UserTypeDTO userTypeDTO = userTypeService.findById(user.getUserTypes().getUserTypeID());
+		user.setUserTypeDesc(userTypeDTO.getUserTypeDesc());
 		userRepository.saveAndFlush(user);
 		return null;
 	}
@@ -59,17 +67,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDTO SearchUserbyID(Long userID) {
-		ModelToDtoDtoToModel modelConverter = new ModelToDtoDtoToModel();
 		User user = userRepository.findById(userID).get();
-		 return modelConverter.mapToUser(user);
+		 return EntityToDtoConverter.convertToUserDTO(user );
 		
 	}
 
 	@Override
 	public
 	void UpdateUser(UserDTO user,long userID ) {
-		ModelToDtoDtoToModel modelConverter = new ModelToDtoDtoToModel();
-		User updatedUser = modelConverter.mapToUserDTO(user);
+		
+		User updatedUser = EntityToDtoConverter.convertToUserEntity(user);   //modelConverter.mapToUserDTO(user);
 		user.setPassword(passwordEncoder.encode(user.getPassword()) );
         Optional<User> optionalUser = userRepository.findById(userID);
         if (optionalUser.isPresent()) {
@@ -80,9 +87,15 @@ public class UserServiceImpl implements UserService{
             existingUser.setFullName(updatedUser.getFullName());
             existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             existingUser.setSalt(updatedUser.getSalt());
-            existingUser.setUserTypeID(updatedUser.getUserTypeID());
-            existingUser.setUserTypeDesc(updatedUser.getUserTypeDesc());
-            existingUser.setPosition(updatedUser.getPosition());
+            existingUser.setUserTypes(updatedUser.getUserTypes());
+            existingUser.setUserPositions(updatedUser.getUserPositions());
+            //existingUser.setUserTypeID(updatedUser.getUserTypeID());
+            existingUser.setUserTypeDesc(updatedUser.getUserTypes().getUserTypeDesc());
+            
+            UserTypeDTO userTypeDTO = userTypeService.findById(updatedUser.getUserTypes().getUserTypeID());
+            existingUser.setUserTypeDesc(userTypeDTO.getUserTypeDesc());
+            
+            //existingUser.setPosition(updatedUser.getPosition());
             existingUser.setHospitalCode(updatedUser.getHospitalCode());
             existingUser.setHospitalId(updatedUser.getHospitalId());
             existingUser.setIsInactive(updatedUser.getIsInactive());
@@ -97,16 +110,16 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserResponse ListAllusers(int pageNo, int pageSize) {
-		ModelToDtoDtoToModel modelConverter = new ModelToDtoDtoToModel();
+		
 		Pageable pageable =PageRequest.of(pageNo-1, pageSize);
 		Page<User> users = userRepository.ListActiveUsers(pageable);
 		//Page<User> users = userRepository.ListActiveUsers2(pageable);
 		List<User> listOfUser=users.getContent();
-		List<UserDTO> content = listOfUser.stream().map(modelConverter::mapToUser).collect(Collectors.toList());
-		
-//		List<UserPosition> userPosition = userPositionRepository.findAll();
-//		return userPosition.stream().map(modelConverter::mapToUserPositionDTO).collect(Collectors.toList());	
- 
+		//List<UserDTO> content = listOfUser.stream().map(modelConverter::mapToUser).collect(Collectors.toList());
+		List<UserDTO> content = listOfUser.stream()
+			    .map(user -> EntityToDtoConverter.convertToUserDTO(user))
+			    .collect(Collectors.toList());
+
 		
 		UserResponse userResponse = new UserResponse();
 		userResponse.setContent(content);
@@ -125,7 +138,12 @@ public class UserServiceImpl implements UserService{
 		//Page<User> users = userRepository.ListActiveUsers(pageable);
 		Page<User> users = userRepository.ListActiveUsersByLastName(lastname,pageable);
 		List<User> listOfUser=users.getContent();
-		List<UserDTO> content = listOfUser.stream().map(modelConverter::mapToUser).collect(Collectors.toList());
+		//List<UserDTO> content = listOfUser.stream().map(modelConverter::mapToUser).collect(Collectors.toList());
+		
+		List<UserDTO> content = listOfUser.stream()
+			    .map(user -> EntityToDtoConverter.convertToUserDTO(user))
+			    .collect(Collectors.toList());
+		
 		
 		UserResponse userResponse = new UserResponse();
 		userResponse.setContent(content);
@@ -142,8 +160,10 @@ public class UserServiceImpl implements UserService{
 		Pageable pageable =PageRequest.of(pageNo-1, pageSize); 
 		Page<User> users = userRepository.ListActiveUsersByfirstName(firstname,pageable);
 		List<User> listOfUser=users.getContent();
-		List<UserDTO> content = listOfUser.stream().map(modelConverter::mapToUser).collect(Collectors.toList());
-		
+	//	List<UserDTO> content = listOfUser.stream().map(modelConverter::mapToUser).collect(Collectors.toList());
+		List<UserDTO> content = listOfUser.stream()
+			    .map(user -> EntityToDtoConverter.convertToUserDTO(user))
+			    .collect(Collectors.toList());
 	
 		UserResponse userResponse = new UserResponse();
 		userResponse.setContent(content);

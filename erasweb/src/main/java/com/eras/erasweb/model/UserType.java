@@ -13,6 +13,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -23,9 +25,14 @@ import java.time.LocalDateTime;
 public class UserType {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long userTypeID;
+	@Column(name="user_type_id")
+	private long userTypeID;	
 	@Column(unique=true, length=15)
 	private String userTypeDesc;
+	
+	@OneToMany(mappedBy = "userTypes")
+	private List<User> users = new ArrayList<>();
+	
 	private int userTypeCode;
 	@Column(name= "date_created", nullable = false, updatable = false)
     private LocalDateTime dateCreated;

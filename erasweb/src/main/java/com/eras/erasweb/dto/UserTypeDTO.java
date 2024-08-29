@@ -25,6 +25,7 @@ public class UserTypeDTO {
     private LocalDateTime dateUpdated;
     private String createdBy;
     private String modifiedBy;
+    
 	
 
 }

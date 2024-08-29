@@ -22,6 +22,8 @@ import com.eras.erasweb.repository.UserPositionRepository;
 import com.eras.erasweb.service.UserPositionService;
 import com.eras.erasweb.utils.ModelToDtoDtoToModel;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserPositionServiceImpl implements UserPositionService {
 	private UserPositionRepository userPositionRepository;
@@ -29,6 +31,8 @@ public class UserPositionServiceImpl implements UserPositionService {
 	private UserPosition userPosition;
 	private UserPositionDTO userPositionDTO;
 	private LocalDateTime today = LocalDateTime.now();
+	
+	private ModelToDtoDtoToModel modelToDtoDtoToModel= new ModelToDtoDtoToModel();
 
 public  UserPositionServiceImpl(UserPositionRepository userPositionRepository ) {
     this.userPositionRepository = userPositionRepository;
@@ -114,6 +118,16 @@ public  UserPositionServiceImpl(UserPositionRepository userPositionRepository ) 
             throw new RuntimeException("Position not found with ID: " + userPositionID);
         }
 		
+	}
+
+	@Override
+	public UserPositionDTO findById(long userPositionID) {
+		
+		UserPosition userPosition = userPositionRepository.findById(userPositionID)
+		        .orElseThrow(() -> new EntityNotFoundException("UserPosition not found with ID: " + userPositionID));
+		    
+		    // Convert the UserPosition entity to a UserPositionDTO
+		    return ModelToDtoDtoToModel.convertToUserPositionDTO(userPosition);
 	}
 
 

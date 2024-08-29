@@ -19,6 +19,8 @@ public interface UserPositionService {
 	 UserPosition SaveUserPosition(UserPositionDTO userPositionDTO);
 	 Boolean DeactivateUserPosition();
 	 void UpdateUserPosition(UserPositionDTO updatedUserposition,long userPositionID );
+
+	UserPositionDTO findById(long userPositionID);
 	
 	
 }

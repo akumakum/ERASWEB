@@ -4,11 +4,34 @@ import com.eras.erasweb.model.*;
 import com.eras.erasweb.dto.*;
 
 public class ModelToDtoDtoToModel {
+	
+	public static UserTypeDTO convertToUserTypeDTO(UserType userType) {
+	    UserTypeDTO userTypeDTO = new UserTypeDTO();
+	    userTypeDTO.setUserTypeID(userType.getUserTypeID());
+	    userTypeDTO.setUserTypeDesc(userType.getUserTypeDesc());
+	    userTypeDTO.setUserTypeCode(userType.getUserTypeCode());
+	    userTypeDTO.setDateCreated(userType.getDateCreated());
+	    userTypeDTO.setDateUpdated(userType.getDateUpdated());
+	    userTypeDTO.setCreatedBy(userType.getCreatedBy());
+	    userTypeDTO.setModifiedBy(userType.getModifiedBy());
+	    return userTypeDTO;
+	}
+
+	public static UserPositionDTO convertToUserPositionDTO(UserPosition userPosition) {
+	    UserPositionDTO userPositionDTO = new UserPositionDTO();
+	    userPositionDTO.setUserPositionID(userPosition.getUserPositionID());
+	    userPositionDTO.setUserPostionDesc(userPosition.getUserPostionDesc());
+	    userPositionDTO.setDateCreated(userPosition.getDateCreated());
+	    userPositionDTO.setDateUpdated(userPosition.getDateUpdated());
+	    userPositionDTO.setCreatedBy(userPosition.getCreatedBy());
+	    userPositionDTO.setModifiedBy(userPosition.getModifiedBy());
+	    return userPositionDTO;
+	}
 
 	public UserDTO mapToUser(User user) {
-		return UserDTO.builder().UserID(user.getUserID()).UserDefinedID(user.getUserDefinedID())
+		return UserDTO.builder().userID(user.getUserID()).userDefinedID(user.getUserDefinedID())
 				.emailAdd(user.getEmailAdd()).fullName(user.getFullName()).password(user.getPassword())
-				.salt(user.getSalt()).userTypeID(user.getUserTypeID()).position(user.getPosition())
+				.salt(user.getSalt()).userTypeID(user.getUserTypeID())
 				.hospitalCode(user.getHospitalCode()).hospitalId(user.getHospitalId()).isInactive(user.getIsInactive())
 				.dateCreated(user.getDateCreated()).dateUpdated(user.getDateUpdated()).createdBy(user.getCreatedBy())
 				.modifiedBy(user.getModifiedBy())
@@ -19,7 +42,7 @@ public class ModelToDtoDtoToModel {
 	public User mapToUserDTO(UserDTO user) {
 		return User.builder().UserID(user.getUserID()).UserDefinedID(user.getUserDefinedID())
 				.emailAdd(user.getEmailAdd()).fullName(user.getFullName()).password(user.getPassword())
-				.salt(user.getSalt()).userTypeID(user.getUserTypeID()).position(user.getPosition())
+				.salt(user.getSalt()).userTypeID(user.getUserTypeID())
 				.hospitalCode(user.getHospitalCode()).hospitalId(user.getHospitalId()).isInactive(user.getIsInactive())
 				.dateCreated(user.getDateCreated())
 				.dateUpdated(user.getDateUpdated())
@@ -117,8 +140,8 @@ public class ModelToDtoDtoToModel {
 	
 	public UserPosition mapToUserPosition(UserPositionDTO userPosition) {
 		return UserPosition.builder()
-				.UserPositionID(userPosition.getUserPositionID())
-				.UserPostionDesc(userPosition.getUserPostionDesc())
+				.userPositionID(userPosition.getUserPositionID())
+				.userPostionDesc(userPosition.getUserPostionDesc())
 				.dateCreated(userPosition.getDateCreated())
 				.dateUpdated(userPosition.getDateUpdated())
 				.createdBy(userPosition.getCreatedBy())

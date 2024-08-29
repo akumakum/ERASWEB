@@ -12,7 +12,7 @@ import com.eras.erasweb.model.UserPosition;
 @Repository
 public interface UserPositionRepository extends JpaRepository <UserPosition,Long >{
 
-	@Query("SELECT u from UserPosition u WHERE u.UserPositionID <> 0  ORDER BY u.UserPostionDesc") 
+	@Query("SELECT u from UserPosition u WHERE u.userPositionID <> 0  ORDER BY u.userPostionDesc") 
 	Page<UserPosition> ListActiveUserPosition(Pageable pageable);
 
 

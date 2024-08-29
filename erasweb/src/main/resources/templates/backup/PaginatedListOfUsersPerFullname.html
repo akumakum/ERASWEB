@@ -14,12 +14,12 @@
 		th:action="@{/user/usersearchbylastname}">
 		<div class="container">
 
-			<div class="input-group mb-1 mt-2">
-				<input type="text" class="form-control" name="lastnamequery" 
+			<div class="input-group">
+				<input type="text" class="form-control" name="lastnamequery"
 					th:value="${lastnamequery}"
 					aria-label="Text input with segmented dropdown button">
 							<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-secondary" style="background-color: #FF7F50; color: white; width: 160px"
+					<button type="submit" class="btn btn-outline-secondary"
 						th:formaction="@{/maintenance/user/usersearchbyid}">Search by
 						User ID</button>
 				</div>
@@ -29,7 +29,7 @@
 					th:value="${firstnamequery}"
 					aria-label="Text input with segmented dropdown button">
 				<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-secondary"  style="background-color: #FF7F50; color: white; width: 160px"
+					<button type="submit" class="btn btn-outline-secondary"
 						th:formaction="@{/maintenance/user/fullname}">Search by
 						Full Name</button>
 				</div>
@@ -57,11 +57,12 @@
 							th:href="@{/maintenance/user/{userID}/view(userID=${user.userID})}">Edit</a>
 						<td th:text=${user.fullName}></td>
 						<td th:text=${user.userDefinedID}></td>
-						<td th:text=${user.userPositions.userPostionDesc}></td>
-						<td th:text=${user.userTypes.userTypeDesc}></td>
+						<td th:text=${user.position}></td>
+						<td th:text=${user.userTypeID}></td>
 						<td th:text=${user.isInactive}></td>
 						<td th:text=${user.createdBy}></td>
 						<td th:text=${user.dateCreated}></td>
+
 					</tr>
 
 

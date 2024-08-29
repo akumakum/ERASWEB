@@ -11,35 +11,35 @@
 <body>
 	<div th:replace="fragments/header :: navbar"></div>
 	<form role="form" method="post"
-		th:action="@{/user/usersearchbylastname}">
+		th:action="@{/maintenance/user/fullname}">
 		<div class="container">
 
-			<div class="input-group mb-1 mt-2">
-				<input type="text" class="form-control" name="lastnamequery" 
-					th:value="${lastnamequery}"
+			<div class="input-group">
+				<input type="text" class="form-control" name="lastnamequery"
 					aria-label="Text input with segmented dropdown button">
-							<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-secondary" style="background-color: #FF7F50; color: white; width: 160px"
-						th:formaction="@{/maintenance/user/usersearchbyid}">Search by
-						User ID</button>
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-outline-secondary" 
+					th:formaction="@{/maintenance/user/usersearchbyid}"
+					>Search	by User ID</button>
 				</div>
 			</div>
 			<div class="input-group">
 				<input type="text" class="form-control" name="firstnamequery"
-					th:value="${firstnamequery}"
 					aria-label="Text input with segmented dropdown button">
 				<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-secondary"  style="background-color: #FF7F50; color: white; width: 160px"
+					<button type="submit" class="btn btn-outline-secondary"
 						th:formaction="@{/maintenance/user/fullname}">Search by
 						Full Name</button>
 				</div>
 			</div>
+			
+			
+			
 
 
 
 			<table class="table">
 				<thead>
-
 					<tr>
 						<th scope="col">Edit</th>
 						<th scope="col">Full Name</th>
@@ -57,22 +57,25 @@
 							th:href="@{/maintenance/user/{userID}/view(userID=${user.userID})}">Edit</a>
 						<td th:text=${user.fullName}></td>
 						<td th:text=${user.userDefinedID}></td>
-						<td th:text=${user.userPositions.userPostionDesc}></td>
-						<td th:text=${user.userTypes.userTypeDesc}></td>
+						<td th:text=${user.position}></td>
+						<td th:text=${user.userTypeDesc}></td>
 						<td th:text=${user.isInactive}></td>
 						<td th:text=${user.createdBy}></td>
 						<td th:text=${user.dateCreated}></td>
-					</tr>
 
+					</tr>
 
 				</tbody>
 			</table>
 			<ul class="nav nav-pills">
 				<li class="nav-item"
 					th:each="i: ${#numbers.sequence(0,totalPages-1)}"><a
-					th:href="@{/maintenance/usersearchbyfullname/pages(paged=${i+1},lastnamequery=${lastnamequery},firstnamequery=${firstnamequery})}"
-					th:text="${i+1}" class="nav-link"></a></li>
+					th:href="@{/maintenance/user/userlistall/pages(page=${i+1})}" th:text="${i+1}"
+					class="nav-link"></a> 
 
+				</li>
+				<!--						th:href="@{/userlistall(pageNo=${i+1},pageSize =5)} " th:text="${i+1}" class="nav-link"></a></li>-->
+				<!--						th:href="@{/(page=${i})}" th:text="${i+1}" class="nav-link"></a></li>-->
 			</ul>
 		</div>
 
