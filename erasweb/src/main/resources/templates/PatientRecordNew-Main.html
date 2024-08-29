@@ -358,8 +358,8 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Dosage</th>
 										<th>Systemic Opioid</th>
+										<th>Dosage</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -367,13 +367,13 @@
 									<tr
 										th:each="opioid, iterStat : ${patientRecord.systemicOpioids}">
 										<td th:text="${iterStat.index + 1}">1</td>
-										<td><input type="number"
-											th:field="*{systemicOpioids[__${iterStat.index}__].dosage}"
-											class="form-control dosage-input" /></td>
 										<td><select class="form-control opioid-select"
 											th:field="*{systemicOpioids[__${iterStat.index}__].comRefID}">
 												<!-- Options will be dynamically loaded -->
 										</select></td>
+										<td><input type="number"
+											th:field="*{systemicOpioids[__${iterStat.index}__].dosage}"
+											class="form-control dosage-input" /></td>
 										<td>
 											<button type="button" class="btn btn-danger"
 												onclick="removeRowSysOp(this)">Remove</button>
@@ -587,13 +587,12 @@
 					<!-- table here  -->
 					<div class="container mt-5">
 						<h3>Oral Opioids Agents</h3>
-
 						<table class="table table-bordered" id="oralOpioidsAgentsTable">
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Dosage</th>
 									<th>Oral Opioid Agent</th>
+									<th>Dosage</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -601,13 +600,13 @@
 								<tr
 									th:each="agent, iterStat : ${patientRecord.oralOpioidsAgents}">
 									<td th:text="${iterStat.index + 1}">1</td>
-									<td><input type="number"
-										th:field="*{oralOpioidsAgents[__${iterStat.index}__].dosage}"
-										class="form-control dosage-input" /></td>
 									<td><select class="form-control agent-select"
 										th:field="*{oralOpioidsAgents[__${iterStat.index}__].comRefID}">
 											<!-- Options will be dynamically loaded -->
 									</select></td>
+									<td><input type="number"
+										th:field="*{oralOpioidsAgents[__${iterStat.index}__].dosage}"
+										class="form-control dosage-input" /></td>
 									<td>
 										<button type="button" class="btn btn-danger"
 											onclick="removeRowAgentO(this)">Remove</button>
@@ -615,6 +614,8 @@
 								</tr>
 							</tbody>
 						</table>
+						<button type="button" class="btn btn-primary"
+							onclick="addRowAgentO()">Add Oral Opioid Agent</button>
 						<button type="button" class="btn btn-primary"
 							onclick="addRowAgentO()">Add Oral Opioid Agent</button>
 					</div>
@@ -890,71 +891,71 @@
         }    
         
         // -systemic opioids
-           var opioidsData = [];
+ var opioidsData = [];
 
-    function loadOpioidsOptions(selectElement) {
-        selectElement.empty(); // Clear any existing options
-        selectElement.append('<option value="">Select Systemic Opioid</option>'); // Add default option
-        opioidsData.forEach(function(opioid) {
-            selectElement.append('<option value="' + opioid.systemicOpioidsRefId + '">' + opioid.systemicOpioidsDesc + '</option>');
-        });
-    }
-    
-    function addRowSysOp() {
-        var table = document.getElementById('systemicOpioidsTable').getElementsByTagName('tbody')[0];
-        var rowCount = table.rows.length;
-        var row = table.insertRow(rowCount);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-
-        cell1.innerHTML = rowCount + 1;
-        cell2.innerHTML = '<input type="number" name="systemicOpioids[' + rowCount + '].dosage" class="form-control dosage-input"/>';
-        cell3.innerHTML = '<select class="form-control opioid-select" name="systemicOpioids[' + rowCount + '].comRefID"></select>';
-        cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowSysOp(this)">Remove</button>';
-
-        loadOpioidsOptions($(cell3).find('.opioid-select'));
-
-        // Add event listener to the new select element
-        $(cell3).find('.opioid-select').change(function() {
-            var dosageInput = $(row).find('.dosage-input');
-            if (dosageInput.val().trim() === "") {
-                alert('Please enter a dosage before selecting an opioid.');
-            }
-        });
-    }
- 
-
-    function removeRowSysOp(button) {
-        var row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-    }
-    
-    $(document).ready(function() {
-        $.ajax({
-            url: '/ajax/systemicOpioidsRef/all',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                opioidsData = data;
-                $('.opioid-select').each(function() {
-                    loadOpioidsOptions($(this));
-                    
-                    // Add event listener to the existing select elements
-                    $(this).change(function() {
-                        var dosageInput = $(this).closest('tr').find('.dosage-input');
-                        if (dosageInput.val().trim() === "") {
-                            alert('Please enter a dosage before selecting an opioid.');
-                        }
-                    });
-                });
-            },
-            error: function(error) {
-                console.error("Error loading systemic opioids:", error);
-            }
-        });
+function loadOpioidsOptions(selectElement) {
+    selectElement.empty(); // Clear any existing options
+    selectElement.append('<option value="">Select Systemic Opioid</option>'); // Add default option
+    opioidsData.forEach(function(opioid) {
+        selectElement.append('<option value="' + opioid.systemicOpioidsRefId + '">' + opioid.systemicOpioidsDesc + '</option>');
     });
+}
+
+function addRowSysOp() {
+    var table = document.getElementById('systemicOpioidsTable').getElementsByTagName('tbody')[0];
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    cell1.innerHTML = rowCount + 1;
+    cell2.innerHTML = '<select class="form-control opioid-select" name="systemicOpioids[' + rowCount + '].comRefID"></select>';
+    cell3.innerHTML = '<input type="number" name="systemicOpioids[' + rowCount + '].dosage" class="form-control dosage-input"/>';
+    cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowSysOp(this)">Remove</button>';
+
+    loadOpioidsOptions($(cell2).find('.opioid-select'));
+
+    // Add event listener to the new select element
+    $(cell2).find('.opioid-select').change(function() {
+        var dosageInput = $(cell3).find('.dosage-input');
+        if (dosageInput.val().trim() === "") {
+            alert('Please enter a dosage before selecting an opioid.');
+        }
+    });
+}
+
+function removeRowSysOp(button) {
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}
+
+$(document).ready(function() {
+    $.ajax({
+        url: '/ajax/systemicOpioidsRef/all',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            opioidsData = data;
+            $('.opioid-select').each(function() {
+                loadOpioidsOptions($(this));
+                
+                // Add event listener to the existing select elements
+                $(this).change(function() {
+                    var dosageInput = $(this).closest('tr').find('.dosage-input');
+                    if (dosageInput.val().trim() === "") {
+                        alert('Please enter a dosage before selecting an opioid.');
+                    }
+                });
+            });
+        },
+        error: function(error) {
+            console.error("Error loading systemic opioids:", error);
+        }
+    });
+});
+
 
     // Agents
    var agentsData = [];
@@ -1025,15 +1026,15 @@ function addRowAgentO() {
     var cell4 = row.insertCell(3);
 
     cell1.innerHTML = rowCount + 1;
-    cell2.innerHTML = '<input type="number" name="oralOpioidsAgents[' + rowCount + '].dosage" class="form-control dosage-input-oral"/>';
-    cell3.innerHTML = '<input type="hidden" name="oralOpioidsAgents[' + rowCount + '].id" />' +
+    cell2.innerHTML = '<input type="hidden" name="oralOpioidsAgents[' + rowCount + '].id" />' +
                       '<select class="form-control agent-select" name="oralOpioidsAgents[' + rowCount + '].comRefID"></select>';
+    cell3.innerHTML = '<input type="number" name="oralOpioidsAgents[' + rowCount + '].dosage" class="form-control dosage-input-oral"/>';
     cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRowAgentO(this)">Remove</button>';
 
-    loadAgentsOptionsO($(cell3).find('.agent-select'));
+    loadAgentsOptionsO($(cell2).find('.agent-select'));
     
     // Add event listener to the new select element
-    $(cell3).find('.agent-select').change(function() {
+    $(cell2).find('.agent-select').change(function() {
         var dosageInput = $(this).closest('tr').find('.dosage-input-oral');
         if (dosageInput.val().trim() === "") {
             alert('Please enter a dosage before selecting an opioid.');
@@ -1072,6 +1073,7 @@ $(document).ready(function() {
         }
     });
 });
+
 
 //date convert to locale 
       document.addEventListener("DOMContentLoaded", function() {
@@ -1334,12 +1336,15 @@ $(document).ready(function() {
 	            addRowSysOp(); // Add a new row for each opioid
 	            var newRow = opioidsTableBody.find('tr:last-child');
 
-	            // Set the hidden input value and the selected value of the select element
-	            newRow.find('input[type="number"]').val(opioid.dosage);
+	            // Set the selected value of the select element (Oral Opioid Agent)
 	            newRow.find('.opioid-select').val(opioid.comRefID);
+	            // Set the value of the input element (Dosage)
+	            newRow.find('input[type="number"]').val(opioid.dosage);
 	        });
 	    }
 	}
+  
+
   
   function populateOralOpioidsAgents(agents) {
 	    var agentsTableBody = $('#oralOpioidsAgentsTable tbody');
@@ -1350,13 +1355,12 @@ $(document).ready(function() {
 	            addRowAgentO(); // Add a new row for each agent
 	            var newRow = agentsTableBody.find('tr:last-child');
 
-	            // Set the hidden input value and the selected value of the select element
-	            newRow.find('input[type="number"]').val(agent.dosage);
+	            // Set the dosage input value and the selected value of the select element
+	            newRow.find('.dosage-input-oral').val(agent.dosage);
 	            newRow.find('.agent-select').val(agent.comRefID);
 	        });
 	    }
 	}
-  
 
   function getNextSequence() {
 	    var mrnNo = $('#medicalRecordNo').val();
