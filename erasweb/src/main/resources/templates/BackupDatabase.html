@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ERAS Backup</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Database Backup</h1>
+
+    <button id="startBackupBtn">Start Backup</button>
+
+    <div id="statusContainer">
+        <p>Status: <span id="backupStatus">Waiting to start...</span></p>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#startBackupBtn').click(function () {
+                $.ajax({
+                    url: '/api/backup/start',
+                    method: 'GET',
+                    success: function () {
+                        $('#backupStatus').text('Backup in progress...');
+                        updateStatus();
+                    },
+                    error: function () {
+                        $('#backupStatus').text('Backup failed to start.');
+                    }
+                });
+            });
+
+            function updateStatus() {
+                setInterval(function () {
+                    $.get('/api/backup/status', function (data) {
+                        $('#backupStatus').text(data);
+                    });
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

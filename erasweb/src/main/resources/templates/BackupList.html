@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Backup Files</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Select Backup File to Restore</h1>
+<form>
+        <select id="backupFileSelect" name="backupFile">
+            <option th:each="file : ${backupFiles}" th:value="${file}" th:text="${file}"></option>
+        </select>
+        <button type="button" id="startRestoreBtn">Restore</button>
+        <div id="statusContainer">
+            <p>Status: <span id="restoreStatus">Waiting to start...</span></p>
+        </div>
+
+
+    <script>
+    $(document).ready(function () {
+        $('#startRestoreBtn').click(function () {
+            var selectedFile = $('#backupFileSelect').val(); // Get the selected backup file
+            
+            $.ajax({
+                url: '/api/backup/restore/start', 
+                method: 'GET', 
+                data: { backupFile: selectedFile }, // Send the data as query parameters
+                success: function () {
+                    $('#restoreStatus').text('Restore in progress...');
+                    updateRestoreStatus();
+                },
+                error: function () {
+                    $('#restoreStatus').text('Restore failed to start.');
+                }
+            });
+        });
+
+        function updateRestoreStatus() {
+            setInterval(function () {
+                $.get('/api/backup/restore/status', function (data) {
+                    $('#restoreStatus').text(data);
+                });
+            }, 1000);
+        }
+    });
+    </script>
+    </form>
+</body>
+</html>

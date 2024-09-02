@@ -56,8 +56,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="databaseDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Other Setups</a>
                         <div class="dropdown-menu" aria-labelledby="databaseDropdown">
-                            <a class="dropdown-item" href="@{/backup/create}">Backup Database</a>
-                            <a class="dropdown-item" href="@{/backup/restore}">Restore Database</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/backup}">Backup Database</a>
+                            <a class="dropdown-item" th:href="@{/maintenance/restore}">Restore Database</a>
                             <a class="dropdown-item" href="#">Archive Records</a>
                             <a class="dropdown-item" th:href="@{/maintenance/mainpageurl/set}">Create URL Links</a>
                             <a class="dropdown-item" href="#">View URL Links</a>

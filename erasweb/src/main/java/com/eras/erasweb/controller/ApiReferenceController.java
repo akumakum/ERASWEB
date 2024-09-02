@@ -1,12 +1,16 @@
 package com.eras.erasweb.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,5 +78,8 @@ public class ApiReferenceController {
         return dateOfBirth.map(ResponseEntity::ok)
                           .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    
+   
+
     
 }

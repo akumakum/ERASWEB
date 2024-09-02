@@ -1,61 +1,42 @@
 package com.eras.erasweb.controller;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
+import com.eras.erasweb.service.impl.BackupFileService;
+import com.eras.erasweb.service.impl.RestoreService;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 
-@RestController
-@RequestMapping("/maintenance/backup")
+@Controller
 public class BackupController {
 
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+    @Autowired
+    private BackupFileService backupFileService;
 
-    @Value("${spring.datasource.username}")
-    private String dbUsername;
-
-    @Value("${spring.datasource.password}")
-    private String dbPassword;
-
-    @PostMapping("/create")
-    public String createBackup(@RequestParam String filename, @RequestParam String location) throws IOException, InterruptedException {
-        Path backupPath = Paths.get(location, filename);
-        String command = String.format("pg_dump -h localhost -U %s -F c -b -v -f \"%s\" %s",
-                dbUsername, backupPath.toString(), "your_database_name");
-
-        Process process = Runtime.getRuntime().exec(command, null, new File(location));
-        int exitCode = process.waitFor();
-
-        if (exitCode == 0) {
-            return "Backup created successfully!";
-        } else {
-            return "Error creating backup. Exit code: " + exitCode;
-        }
+    @GetMapping("/maintenance/backup/list")
+    public String showBackupFiles(Model model) {
+        List<String> backupFiles = backupFileService.listBackupFiles();
+        model.addAttribute("backupFiles", backupFiles);
+        return "backupList"; // The name of your Thymeleaf template
     }
+    
+    @Autowired
+    private RestoreService restoreService;
 
-    @PostMapping("/restore")
-    public String restoreBackup(@RequestParam String filename, @RequestParam String location) throws IOException, InterruptedException {
-        Path backupPath = Paths.get(location, filename);
-        if (!Files.exists(backupPath)) {
-            return "Backup file does not exist!";
-        }
-
-        String command = String.format("pg_restore -h localhost -U %s -d %s -v \"%s\"",
-                dbUsername, "your_database_name", backupPath.toString());
-
-        Process process = Runtime.getRuntime().exec(command, null, new File(location));
-        int exitCode = process.waitFor();
-
-        if (exitCode == 0) {
-            return "Restore completed successfully!";
-        } else {
-            return "Error restoring backup. Exit code: " + exitCode;
+    @PostMapping("/maintenance/restore")
+    public String restoreBackup(@RequestParam("backupFile") String backupFile) {
+        try {
+            restoreService.restoreBackup(backupFile);
+            return "redirect:/backup/success"; // Redirect to a success page
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/backup/failure"; // Redirect to a failure page
         }
     }
 }
