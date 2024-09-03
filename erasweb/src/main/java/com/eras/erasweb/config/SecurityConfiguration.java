@@ -46,7 +46,13 @@ public class SecurityConfiguration {
                     .logoutSuccessUrl("/login?logout")
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
-            )
+                    
+            ) .sessionManagement(session -> session
+                    .invalidSessionUrl("/login?session=expired") // Redirect when session expires
+                    .maximumSessions(1) // Optionally limit sessions per user
+                    .expiredUrl("/login?session=expired") // Redirect when max session is reached
+                )
+                
                 
                 .build();
     }

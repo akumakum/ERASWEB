@@ -3,8 +3,13 @@
 <head>
     <title>Backup Files</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+	
 </head>
 <body>
+		
+   <div th:replace="fragments/header :: navbar"></div>
     <h1>Select Backup File to Restore</h1>
 <form>
         <select id="backupFileSelect" name="backupFile">
@@ -45,5 +50,6 @@
     });
     </script>
     </form>
+    
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.eras.erasweb.service.impl;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -10,11 +11,29 @@ import java.io.InputStreamReader;
 public class RestoreService {
 	
 	private volatile String status = "Starting";
+	
+	@Value("${backup.pguser}")
+	private String USER_NAME;
 
-    private static final String BACKUP_DIRECTORY = "C:\\tmp\\ERAS-DB-Backup";
-    private static final String USER_NAME= "postgres";
-    private static final String DATABASE="ERAS";
-    private static final String PASSWORD="###422rjeyO";
+	@Value("${backup.pgdb}")
+	private String DATABASE;
+
+	@Value("${backup.pgpassword}")
+	private String PASSWORD;
+
+	@Value("${backup.dir}")
+	private String BACKUP_DIRECTORY;
+
+
+
+//    public String getStatus() {
+//        return status;
+//    }
+
+ //   private static final String BACKUP_DIRECTORY = "C:\\tmp\\ERAS-DB-Backup";
+   // private static final String USER_NAME= "postgres";
+   // private static final String DATABASE="ERAS";
+  //  private static final String PASSWORD="###422rjeyO";
 	public void restoreBackup(String backupFileName) throws IOException {
         String command = "pg_restore -U " + USER_NAME +"-c -C -e -l -d " + DATABASE  +" "+ BACKUP_DIRECTORY + "/" + backupFileName;
 
