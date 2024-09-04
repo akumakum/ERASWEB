@@ -616,8 +616,7 @@
 						</table>
 						<button type="button" class="btn btn-primary"
 							onclick="addRowAgentO()">Add Oral Opioid Agent</button>
-						<button type="button" class="btn btn-primary"
-							onclick="addRowAgentO()">Add Oral Opioid Agent</button>
+
 					</div>
 
 
@@ -918,12 +917,12 @@ function addRowSysOp() {
     loadOpioidsOptions($(cell2).find('.opioid-select'));
 
     // Add event listener to the new select element
-    $(cell2).find('.opioid-select').change(function() {
-        var dosageInput = $(cell3).find('.dosage-input');
-        if (dosageInput.val().trim() === "") {
-            alert('Please enter a dosage before selecting an opioid.');
-        }
-    });
+     // $(cell2).find('.opioid-select').change(function() {
+        // var dosageInput = $(cell3).find('.dosage-input');
+        // if (dosageInput.val().trim() === "") {
+            // alert('Please enter a dosage before selecting an opioid.');
+        // }
+    // });
 }
 
 function removeRowSysOp(button) {
@@ -942,12 +941,13 @@ $(document).ready(function() {
                 loadOpioidsOptions($(this));
                 
                 // Add event listener to the existing select elements
-                $(this).change(function() {
-                    var dosageInput = $(this).closest('tr').find('.dosage-input');
-                    if (dosageInput.val().trim() === "") {
-                        alert('Please enter a dosage before selecting an opioid.');
-                    }
-                });
+                 // $(this).change(function() {
+                    // var dosageInput = $(this).closest('tr').find('.dosage-input');
+                    // if (dosageInput.val().trim() === "") {
+                        // alert('Please enter a dosage before selecting an opioid.');
+                    // }
+                // });
+                
             });
         },
         error: function(error) {
@@ -1034,13 +1034,13 @@ function addRowAgentO() {
     loadAgentsOptionsO($(cell2).find('.agent-select'));
     
     // Add event listener to the new select element
-    $(cell2).find('.agent-select').change(function() {
-        var dosageInput = $(this).closest('tr').find('.dosage-input-oral');
-        if (dosageInput.val().trim() === "") {
-            alert('Please enter a dosage before selecting an opioid.');
-            $(this).val(''); // Reset the selection if dosage is empty
-        }
-    });
+   // $(cell2).find('.agent-select').change(function() {
+        // var dosageInput = $(this).closest('tr').find('.dosage-input-oral');
+        // if (dosageInput.val().trim() === "") {
+            // alert('Please enter a dosage before selecting an opioid.');
+            // $(this).val(''); // Reset the selection if dosage is empty
+        // }
+    // });
 }
 
 function removeRowAgentO(button) {
@@ -1059,13 +1059,14 @@ $(document).ready(function() {
                 loadAgentsOptionsO($(this));
                 
                 // Add event listener to the existing select elements
-                $(this).change(function() {
-                    var dosageInput = $(this).closest('tr').find('.dosage-input-oral');
-                    if (dosageInput.val().trim() === "") {
-                        alert('Please enter a dosage before selecting an opioid.');
-                        $(this).val(''); // Reset the selection if dosage is empty
-                    }
-                });
+              //  $(this).change(function() {
+               //     var dosageInput = $(this).closest('tr').find('.dosage-input-oral');
+                    // if (dosageInput.val().trim() === "") {
+                    // alert('Please enter a dosage before selecting an opioid.');
+                    // $(this).val(''); // Reset the selection if dosage is empty
+                // }
+                    
+              //  });
             });
         },
         error: function(error) {
@@ -1109,18 +1110,18 @@ $(document).ready(function() {
     });
 
     // Validate Systemic Opioids
-    $('#systemicOpioidsTable tbody tr').each(function() {
-        const dosageInput = $(this).find('.dosage-input');
-        const selectElement = $(this).find('.opioid-select');
-        if (dosageInput.val().trim() === "" || isNaN(dosageInput.val())) {
-            isValid = false;
-            errorMessage += "Please enter a numeric dosage for each row in Systemic Opioids table.\n";
-        }
-        if (selectElement.val() === "") {
-            isValid = false;
-            errorMessage += "Please select a systemic opioid for each row in Systemic Opioids table.\n";
-        }
-    });
+  // $('#systemicOpioidsTable tbody tr').each(function() {
+        // const dosageInput = $(this).find('.dosage-input');
+        // const selectElement = $(this).find('.opioid-select');
+        // if (dosageInput.val().trim() === "" || isNaN(dosageInput.val())) {
+            // isValid = false;
+            // errorMessage += "Please enter a numeric dosage for each row in Systemic Opioids table.\n";
+        // }
+        // if (selectElement.val() === "") {
+            // isValid = false;
+            // errorMessage += "Please select a systemic opioid for each row in Systemic Opioids table.\n";
+        // }
+    // });
 
     // Validate Uterotonic Agents
     $('#uterotonicAgentsTable tbody tr').each(function() {
@@ -1132,18 +1133,18 @@ $(document).ready(function() {
     });
 
     // Validate Oral Opioids Agents
-    $('#oralOpioidsAgentsTable tbody tr').each(function() {
-        const dosageInput = $(this).find('.dosage-input-oral');
-        const selectElement = $(this).find('.agent-select');
-        if (dosageInput.val().trim() === "" || isNaN(dosageInput.val())) {
-            isValid = false;
-            errorMessage += "Please enter a numeric dosage for each row in Oral Opioids Agents table.\n";
-        }
-        if (selectElement.val() === "") {
-            isValid = false;
-            errorMessage += "Please select an oral opioid agent for each row in Oral Opioids Agents table.\n";
-        }
-    });
+    // $('#oralOpioidsAgentsTable tbody tr').each(function() {
+        // const dosageInput = $(this).find('.dosage-input-oral');
+        // const selectElement = $(this).find('.agent-select');
+        // if (dosageInput.val().trim() === "" || isNaN(dosageInput.val())) {
+            // isValid = false;
+            // errorMessage += "Please enter a numeric dosage for each row in Oral Opioids Agents table.\n";
+        // }
+        // if (selectElement.val() === "") {
+            // isValid = false;
+            // errorMessage += "Please select an oral opioid agent for each row in Oral Opioids Agents table.\n";
+        // }
+    // });
 
 //    if (!isValid) {
 //        alert(errorMessage);
