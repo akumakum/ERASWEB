@@ -61,10 +61,16 @@ import java.util.stream.Collectors;
 //import javax.validation.Valid;
 
 import java.time.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SettingsController {
 
+	private static final Logger logger = LoggerFactory.getLogger(SettingsController.class);
 	// Paths:
 	// /mantenance/{ITEMS}/{operation}/{id}}
 	// /patientrecord/{ITEMS}/{operation}/{id}}
@@ -184,144 +190,7 @@ public class SettingsController {
 		return "url-edit-or-create";
 	}
 
-//	@PostMapping("/maintenance/user-edit-save")
-//	public String SaveEditUserForm(HttpSession session, @Valid @ModelAttribute("user") UserDTO user,
-//			BindingResult result, @ModelAttribute("formObject") FormObject formObject,
-//			@ModelAttribute("positionObject") FormObject positionObject, Model model) {
-//		// Retrieve Hospital and User
-//		String username = (String) session.getAttribute("username");
-//		Hospital hospital = (Hospital) session.getAttribute("hospital");
-//
-//		// Retrieve Hospital and User
-//		if (result.hasErrors()) {// UserDTO user = new UserDTO();
-//			model.addAttribute("user", user);
-//			List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//			List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//			model.addAttribute("userPosition", userPosition);
-//			model.addAttribute("positionObject", positionObject);
-//			model.addAttribute("userType", userType);
-//			model.addAttribute("formObject", formObject);
-//			return "user-view";
-//		}
-//		if (!user.getPassword().equals(user.getConfirmPassword())) {
-//			result.rejectValue("confirmPassword", "error.user", "Passwords do not match");
-//			model.addAttribute("user", user);
-//			List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//			List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//			model.addAttribute("userPosition", userPosition);
-//			model.addAttribute("positionObject", positionObject);
-//			model.addAttribute("userType", userType);
-//			model.addAttribute("formObject", formObject);
-//			return "redirect: /maintenance/users/userlistall";
-//		}
-//
-//		// Get Position ID to save to User.
-//		// long userTypeID = formObject.getSelectedDeptId();
-//		String[] selection = formObject.getSelectedText().split(",");
-//		String userTypeDesc = selection[0];
-//		String positionName = selection[1];
-//		LocalDateTime today = LocalDateTime.now();
-//		user.setHospitalCode(hospital.getHospitalCode());
-//		user.setHospitalId(hospital.getHospitalID());
-//		user.setCreatedBy(username);
-//		user.setPosition(positionName);
-//		user.setUserTypeDesc(userTypeDesc);
-//
-//		userService.UpdateUser(user, user.getUserID());
-//
-//		return "redirect:/maintenance/user-new";
-//	}
 
-//	@GetMapping("/maintenance/user-new")
-//	public String CreateUserForm(Model model) {
-//		// User user = new User()
-//
-//		UserDTO user = new UserDTO();
-//		model.addAttribute("user", user);
-//		List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//		List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//		model.addAttribute("userPosition", userPosition);
-//		model.addAttribute("positionObject", positionObject);
-//		model.addAttribute("userType", userType);
-//		model.addAttribute("formObject", formObject);
-//
-//		return "user-create";
-//
-//	}
-
-//	@PostMapping("/maintenance/user-new-save")
-//	public String SaveUserForm(HttpSession session, @Valid @ModelAttribute("user") UserDTO user, BindingResult result,
-//			@ModelAttribute("formObject") FormObject formObject,
-//			@ModelAttribute("positionObject") FormObject positionObject, Model model) {
-//		// Retrieve Hospital and User
-//		String username = (String) session.getAttribute("username");
-//		Hospital hospital = (Hospital) session.getAttribute("hospital");
-//
-//		// Retrieve Hospital and User
-//
-//		if (result.hasErrors()) {// UserDTO user = new UserDTO();
-//			model.addAttribute("user", user);
-//			List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//			List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//			model.addAttribute("userPosition", userPosition);
-//			model.addAttribute("positionObject", positionObject);
-//			model.addAttribute("userType", userType);
-//			model.addAttribute("formObject", formObject);
-//			return "user-create";
-//		}
-//		if (!user.getPassword().equals(user.getConfirmPassword())) {
-//			result.rejectValue("confirmPassword", "error.user", "Passwords do not match");
-//			model.addAttribute("user", user);
-//			List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//			List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//			model.addAttribute("userPosition", userPosition);
-//			model.addAttribute("positionObject", positionObject);
-//			model.addAttribute("userType", userType);
-//			model.addAttribute("formObject", formObject);
-//			return "user-create";
-//		}
-//	
-//		// Get Position ID to save to User.
-//		// long userTypeID = formObject.getSelectedDeptId();
-//		// user.setUserTypeID(userTypeID);
-//		// user. .set TypeID(userTypeID);
-//		// Get UserType ID to save to user.
-//
-//		LocalDateTime today = LocalDateTime.now();
-//		user.setDateCreated(today);
-//		// Get UserType and Position from request parameters
-//		// long userTypeID = formObject.getSelectedDeptId();
-//		String[] selection = formObject.getSelectedText().split(",");
-//		String userTypeDesc = selection[0];
-//		String positionName = selection[1];
-//
-//		user.setUserTypeDesc(userTypeDesc);
-//		user.setPosition(positionName);
-//
-//		// Audit
-//		user.setCreatedBy(username);
-//		user.setHospitalCode(hospital.getHospitalCode());
-//		user.setHospitalId(hospital.getHospitalID());
-//		user.setDateCreated(today);
-//		user.setDateUpdated(null);
-//		// Audit
-//		try {
-//			userService.SaveUser(user);
-//		} catch (DataIntegrityViolationException e) {
-//			System.out.println("Fullname or UserID already exist");
-//			model.addAttribute("errorMessage", e.getMessage());
-//			model.addAttribute("user", user);
-//			List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//			List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//			model.addAttribute("userPosition", userPosition);
-//			model.addAttribute("positionObject", positionObject);
-//			model.addAttribute("userType", userType);
-//			model.addAttribute("formObject", formObject);
-//			return "user-create";
-//		}
-//
-//		return "redirect:/maintenance/user-new";
-//	}
 
 	@GetMapping("/maintenance/user/userlistall/pages")
 	public String ViewAllUsersPaginated(
@@ -340,47 +209,7 @@ public class SettingsController {
 		return "ListOfUsers2.html";
 	}
 
-//	@GetMapping("/maintenance/user/{userID}/view")
-//	public String ViewSingleUser(@PathVariable("userID") Long iduser, Model model) {
-//		UserDTO user = userService.SearchUserbyID(iduser);
-//		// pass id to selectbox for display
-//		formObject.setSelectedDeptId(user.getUserTypeID());
-//		positionObject.setSelectedText(user.getPosition()); //
-//		user.setConfirmPassword(user.getPassword());
-//		model.addAttribute("user", user);
-//		List<UserTypeDTO> userType = userTypeService.ListAllUserTypeCreated(); // deparmentService.ListOfDeparments();
-//		List<UserPositionDTO> userPosition = userPositionService.SearchAllUserPosition();
-//		model.addAttribute("userPosition", userPosition);
-//		model.addAttribute("positionObject", positionObject);
-//		model.addAttribute("userType", userType);
-//		model.addAttribute("formObject", formObject);
-//		return "user-view.html";
-//	}
 
-//	@GetMapping("/maintenance/users/userlistall")
-//	public String ViewAllUsers(@RequestParam(value = "PageNo", required = false) String spageNo,
-//			@RequestParam(value = "PageSize", required = false) String spageSize,
-//			@RequestParam(value = "lastnamequery", required = false) String lastname,
-//			@RequestParam(value = "firstname", required = false) String firstname, Model model) {
-//
-//		if (spageNo == null) {
-//			spageNo = "1";
-//		}
-//		if (spageSize == null) {
-//			spageSize = "5";
-//		}
-//
-//		int pageNo = Integer.parseInt(spageNo.trim());
-//		int pageSize = Integer.parseInt(spageSize.trim());
-//
-//		UserResponse users = userService.ListAllusers(pageNo, pageSize);
-//
-//		model.addAttribute("users", users.getContent());
-//		model.addAttribute("currenPage", users.getPageNO());
-//		model.addAttribute("totalPages", users.getTotalPages());
-//		model.addAttribute("totalItems", users.getTotalElement());
-//		return "ListOfUsers2.html";
-//	}
 
 	@PostMapping("/maintenance/user/fullname")
 	public String SearchAllByFirstNamePaginated(
@@ -697,7 +526,7 @@ public class SettingsController {
 		// Retrieve Hospital and User
 		if (result.hasErrors()) {
 
-			return "userType-view";
+			return "usertype-view";
 		}
 
 		LocalDateTime today = LocalDateTime.now();
@@ -764,8 +593,13 @@ public class SettingsController {
 
 		int pageSize = 5;
 		UserPositionResponse userPosition = userPositionService.ListAllUserPosition(pageNo, pageSize);
-
-		model.addAttribute("userposition", userPosition.getContent());
+		
+	
+		model.addAttribute("userpositions", userPosition.getContent());
+		
+	
+		
+		
 		model.addAttribute("currenPage", userPosition.getPageNO());
 		model.addAttribute("totalPages", userPosition.getTotalPages());
 		model.addAttribute("totalItems", userPosition.getTotalElement());
@@ -790,7 +624,7 @@ public class SettingsController {
 		pageSize = 5;
 		UserPositionResponse userPosition = userPositionService.ListAllUserPosition(pageNo, pageSize);
 
-		model.addAttribute("userposition", userPosition.getContent());
+		model.addAttribute("userpositions", userPosition.getContent());
 		model.addAttribute("currenPage", userPosition.getPageNO());
 		model.addAttribute("totalPages", userPosition.getTotalPages());
 		model.addAttribute("totalItems", userPosition.getTotalElement());
@@ -798,7 +632,9 @@ public class SettingsController {
 	}
 
 	@GetMapping("/maintenance/userPosition/{userPositionID}/view")
-	public String ViewSingleUserPosition(@PathVariable("userPositionID") Long idTypeuser, Model model) {
+	public String ViewSingleUserPosition(@PathVariable("userPositionID") Long idTypeuser , Model model) {
+		
+	
 		UserPositionDTO userPosition = userPositionService.SearchUserPositionByID(idTypeuser);
 		model.addAttribute("userposition", userPosition);
 		return "userposition-view.html";

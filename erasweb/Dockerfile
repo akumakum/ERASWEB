@@ -1,9 +1,37 @@
 FROM maven:3.8.5-openjdk-17 AS build
-COPY ..
+
+#Create directory in image
+RUN mkdir /app
+
+
+
+# Copy files from your project to the working directory
+COPY . /app
+
+# set as working directory
+WORKDIR /app
+# Build jar package
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/erasweb-0.0.1-SNAPSHOT.war erasweb.war
-EXPOSE 8080
-ENTRYPOINT ["java" "-war","erasweb.war"]
+# Copy from local build to container
+COPY target/erasweb-0.0.1-SNAPSHOT.jar   /app/erasweb.jar 
+ 
+#Open HTTP Access port                 
+EXPOSE 8082
+# SHELL ["/bin/bash", "-c"]
+#ENTRYPOINT ["java" "-jar","erasweb.jar"]
+
+# Run the JAR file
+CMD ["java", "-jar", "erasweb.jar"]
+
+#Build docker image:
+# docker build -t eras-springboot-app .
+# run docker image :
+# docker run -p 8082:8082 eras-springboot-app
+
+# diggingto to logs:
+# open poweshell
+# docker exec -it compassionate_kowalevski /bin/bash
+
+
 
