@@ -543,6 +543,7 @@ public class SettingsController {
 		UserTypeDTO userType = userTypeService.SearchUserTypebyID(idTypeuser); // userService.SearchUserbyID(iduser);
 		model.addAttribute("usertype", userType);
 		return "usertype-view.html";
+		       
 	}
 
 	@GetMapping("/maintenance/userposition/userposition-new")
