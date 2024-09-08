@@ -36,7 +36,7 @@ public class SystemicOpioidsReferenceController {
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("systemicOpioidsReference", new SystemicOpioidsReferenceDTO());
-        return "SystemicOpiodsReference-create";
+        return "systemicOpiodsReference-create";
     }
 
     @PostMapping("/save")

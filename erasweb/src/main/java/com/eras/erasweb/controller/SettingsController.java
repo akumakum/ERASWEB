@@ -526,7 +526,7 @@ public class SettingsController {
 		// Retrieve Hospital and User
 		if (result.hasErrors()) {
 
-			return "usertype-view";
+			return "userTypeView.html";
 		}
 
 		LocalDateTime today = LocalDateTime.now();
@@ -542,7 +542,7 @@ public class SettingsController {
 	public String ViewSingleUserType(@PathVariable("userTypeID") Long idTypeuser, Model model) {
 		UserTypeDTO userType = userTypeService.SearchUserTypebyID(idTypeuser); // userService.SearchUserbyID(iduser);
 		model.addAttribute("usertype", userType);
-		return "usertype-view.html";
+		return "userTypeView.html";
 		       
 	}
 
