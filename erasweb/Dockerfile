@@ -2,7 +2,8 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 COPY . /app
-RUN mvn clean package -DskipTests
+#RUN mvn clean package -DskipTests
+RUN mvn -f /app/erasweb/pom.xml clean package -DskipTests
 
 # Use a JDK runtime for running the application
 FROM eclipse-temurin:17-jdk-alpine
