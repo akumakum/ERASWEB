@@ -1,5 +1,5 @@
-#FROM maven:3.8.5-openjdk-17 AS build
-FROM eclipse-temurin:17-jdk-alpine
+FROM maven:3.8.5-openjdk-17 AS build
+#FROM eclipse-temurin:17-jdk-alpine
 
 #Create directory in image
 RUN mkdir  /app
