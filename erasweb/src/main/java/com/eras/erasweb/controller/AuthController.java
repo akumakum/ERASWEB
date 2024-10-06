@@ -22,6 +22,14 @@ public class AuthController {
 		return "Login";
 
 	}
+	
+	@GetMapping("/")
+
+	public String Login(Model model) {
+
+		return "Login";
+
+	}
 
 
 }
