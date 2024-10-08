@@ -1,17 +1,43 @@
-# Use Maven for building
-FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /app
+#FROM maven:3.8.5-openjdk-17 AS build
+FROM eclipse-temurin:17-jdk-alpine AS build
+
+#Create directory in image
+RUN mkdir  /app
+
+
+
+# Copy files from your project to the working directory
 COPY . /app
-COPY pom.xml /app/erasweb/pom.xml
 
-#RUN mvn clean package -DskipTests
-#RUN mvn -f /app/erasweb/pom.xml clean package -DskipTests
-RUN mvn clean package  -DskipTests
-
-# Use a JDK runtime for running the application
-FROM eclipse-temurin:17-jdk-alpine
+# set as working directory
 WORKDIR /app
-COPY target/erasweb-0.0.1-SNAPSHOT.jar /app/erasweb.jar
-#COPY --from=build /app/erasweb/target/erasweb-0.0.1-SNAPSHOT.jar /app/erasweb.jar
+# Build jar package
+#RUN mvn clean package -DskipTests
+
+# Copy from local build to container
+#COPY target/erasweb-0.0.1-SNAPSHOT.jar   /app/erasweb.jar 
+
+COPY target/erasweb-0.0.1-SNAPSHOT.jar  /app/erasweb.jar 
+ 
+#Open HTTP Access port                 
 EXPOSE 8082
+# SHELL ["/bin/bash", "-c"]
+#ENTRYPOINT ["java" "-jar","erasweb.jar"]
+
+# Run the JAR file
 CMD ["java", "-jar", "erasweb.jar"]
+
+#Build docker image:
+# docker build -t eras-springboot-app .
+#docker build -t erasweb-app --progress=plain .
+# to build docker while removing cache:
+# docker build --no-cache -t erasweb-app .
+# run docker image :
+# docker run -p 8082:8082 eras-springboot-app
+
+# diggingto to logs:
+# open poweshell
+# docker exec -it compassionate_kowalevski /bin/bash
+
+
+

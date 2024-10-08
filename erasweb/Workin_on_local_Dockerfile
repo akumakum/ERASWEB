@@ -1,5 +1,5 @@
 #FROM maven:3.8.5-openjdk-17 AS build
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jdk-alpine AS build
 
 #Create directory in image
 RUN mkdir  /app
@@ -29,6 +29,9 @@ CMD ["java", "-jar", "erasweb.jar"]
 
 #Build docker image:
 # docker build -t eras-springboot-app .
+#docker build -t erasweb-app --progress=plain .
+# to build docker while removing cache:
+# docker build --no-cache -t erasweb-app .
 # run docker image :
 # docker run -p 8082:8082 eras-springboot-app
 
