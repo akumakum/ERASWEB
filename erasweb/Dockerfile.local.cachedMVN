@@ -1,22 +1,26 @@
-# Stage 1: Dependency Caching
+# Stage 1: Build stage
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
-# First, copy only the pom.xml and other files that define dependencies
-COPY erasweb/pom.xml erasweb/pom.xml
-COPY erasweb/.mvn erasweb/.mvn # Optional: if your project uses .mvn directory for custom settings
+# Copy only the pom.xml first and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Download dependencies. This will be cached until pom.xml changes
-RUN mvn -f /app/erasweb/pom.xml dependency:go-offline
+# Now copy the rest of the project files
+COPY . .
 
-# Stage 2: Build the Application
-# Copy the actual source files only after dependencies are cached
-COPY . /app
-RUN mvn -f /app/erasweb/pom.xml clean package -DskipTests
+# Build the application
+RUN mvn clean package -DskipTests
 
-# Stage 3: Runtime Image
+# Stage 2: Runtime stage
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
-COPY --from=build /app/erasweb/target/erasweb-0.0.1-SNAPSHOT.jar /app/erasweb.jar
+
+# Copy the built JAR file from the build stage
+COPY --from=build /app/target/erasweb-0.0.1-SNAPSHOT.jar /app/erasweb.jar
+
+# Expose port 8082
 EXPOSE 8082
+
+# Start the application
 CMD ["java", "-jar", "erasweb.jar"]

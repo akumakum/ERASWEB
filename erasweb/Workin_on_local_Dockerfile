@@ -39,5 +39,5 @@ CMD ["java", "-jar", "erasweb.jar"]
 # open poweshell
 # docker exec -it compassionate_kowalevski /bin/bash
 
-
+#C:\JavaProjectRepositories\ERASWEB\erasweb
 
