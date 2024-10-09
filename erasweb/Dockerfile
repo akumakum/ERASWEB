@@ -33,4 +33,4 @@ EXPOSE 8082
 #RUN ls -la /app/erasweb.jar
 
 # Start the application
-CMD ["java", "-jar", "erasweb.jar"]
+CMD ["java", "-jar", "/app/erasweb.jar"]
