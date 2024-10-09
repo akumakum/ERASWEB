@@ -22,5 +22,14 @@ COPY --from=build /app/target/erasweb-0.0.1-SNAPSHOT.jar /app/erasweb.jar
 # Expose port 8082
 EXPOSE 8082
 
+# modify jar so it would execute
+RUN chmod +x /app/erasweb.jar
+
+# Verify if Java is installed
+RUN java -version
+
+# Check if the JAR file exists
+RUN ls -la /app/erasweb.jar
+
 # Start the application
 CMD ["java", "-jar", "erasweb.jar"]
