@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy only the pom.xml first and download dependencies
 #COPY pom.xml .
-COPY pom.xml /app/pom.xml
+COPY /erasweb/pom.xml /app/pom.xml
 RUN mvn dependency:go-offline
 
 # Now copy the rest of the project files
