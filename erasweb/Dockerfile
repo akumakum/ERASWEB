@@ -3,8 +3,8 @@ FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
 # Copy only the pom.xml first and download dependencies
-#COPY pom.xml .
-COPY /erasweb/pom.xml /app/pom.xml
+COPY pom.xml .
+#COPY /erasweb/pom.xml /app/pom.xml
 RUN mvn dependency:go-offline
 
 # Now copy the rest of the project files
@@ -34,3 +34,6 @@ EXPOSE 8082
 
 # Start the application
 CMD ["java", "-jar", "/app/erasweb.jar"]
+
+#to Run docker compose:
+#docker-compose up --build

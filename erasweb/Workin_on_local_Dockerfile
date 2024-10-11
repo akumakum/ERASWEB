@@ -40,4 +40,9 @@ CMD ["java", "-jar", "erasweb.jar"]
 # docker exec -it compassionate_kowalevski /bin/bash
 
 #C:\JavaProjectRepositories\ERASWEB\erasweb
+#docker-compose up --build
+
+# After adjustment to any properties of yml
+#docker-compose down
+#docker-compose up --build
 
